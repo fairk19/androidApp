@@ -2,35 +2,37 @@ package ru.mail.app;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
+import com.evernote.client.android.EvernoteSession;
+import com.evernote.client.android.OnClientCallback;
+import com.evernote.edam.type.User;
+import com.evernote.thrift.transport.TTransportException;
 
-public class MainActivity extends Activity {
+public class MainActivity extends ParentActivity {
 
-    // Name of this application, for logging
     private static final String LOGTAG = "MainActivity";
-
-    // UI elements that we update
-    private Button mLoginButton;
+    private static final String CONSUMER_KEY = "fairk19";
+    private static final String CONSUMER_SECRET = "b5d50ac0249441a8";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mLoginButton = (Button) findViewById(R.id.login);
 
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+
     }
 
 
@@ -71,7 +73,41 @@ public class MainActivity extends Activity {
     }
 
     public void login(View view) {
+//        mEvernoteSession.authenticate(this);
+        try {
+            mEvernoteSession.getClientFactory().createUserStoreClient().authenticate("fairk19@gmail.com", "qwerty", CONSUMER_KEY, CONSUMER_SECRET, true, null);
+        }catch (TTransportException e){
+            Log.e(LOGTAG, "Error login or password", e);
+        }
+        try {
+            mEvernoteSession.getClientFactory().createUserStoreClient().getUser(
+                    new OnClientCallback<User>() {
+                        @Override
+                        public void onSuccess(User user){
+                            Log.v(LOGTAG, "User: "+user.getUsername());
+                        }
 
+                        @Override
+                        public void onException(Exception exception) {
+                            Log.e(LOGTAG, exception.toString());
+                        }
+                    }
+            );
+        } catch (Exception e) {
+            Log.v(LOGTAG, e.toString());
+        }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            //Update UI when oauth activity returns result
+            case EvernoteSession.REQUEST_CODE_OAUTH:
+                if (resultCode == Activity.RESULT_OK) {
+                    Log.e(LOGTAG, "Authentication was successful");
+                }
+                break;
+        }
+    }
 }

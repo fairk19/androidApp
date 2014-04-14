@@ -28,6 +28,7 @@ package com.evernote.client.android;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -36,26 +37,45 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 import com.evernote.androidsdk.R;
 import com.evernote.client.oauth.EvernoteAuthToken;
 import com.evernote.client.oauth.YinxiangApi;
 import com.evernote.edam.userstore.BootstrapInfo;
 import com.evernote.edam.userstore.BootstrapProfile;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.EvernoteApi;
 import org.scribe.model.Token;
 import org.scribe.model.Verifier;
 import org.scribe.oauth.OAuthService;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An Android Activity for authenticating to Evernote using OAuth.
@@ -91,56 +111,67 @@ public class EvernoteOAuthActivity extends Activity {
 
   private Activity mActivity;
 
-  private WebView mWebView;
+//  private WebView mWebView;
 
   private AsyncTask mBeginAuthSyncTask = null;
-  private AsyncTask mCompleteAuthSyncTask = null;
+//  private AsyncTask mCompleteAuthSyncTask = null;
 
   /**
    * Overrides the callback URL and authenticate
    */
-  private WebViewClient mWebViewClient = new WebViewClient() {
-
-    @Override
-    public boolean shouldOverrideUrlLoading(WebView view, String url) {
-      Uri uri = Uri.parse(url);
-      if (uri.getScheme().equals(getCallbackScheme())) {
-        if (mCompleteAuthSyncTask == null) {
-          mCompleteAuthSyncTask = new CompleteAuthAsyncTask().execute(uri);
-        }
-        return true;
-      }
-      return super.shouldOverrideUrlLoading(view, url);
-    }
-  };
+//  private WebViewClient mWebViewClient = new WebViewClient() {
+//
+//    @Override
+//    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//        Uri uri = Uri.parse(url);
+//        if (uri.getScheme().equals(getCallbackScheme())) {
+//            if (mCompleteAuthSyncTask == null) {
+//                mCompleteAuthSyncTask = new CompleteAuthAsyncTask().execute(uri);
+//            }
+//            return true;
+//        }
+//        return super.shouldOverrideUrlLoading(view, url);
+//    }
+//};
 
   /**
    * Allows for showing progress
    */
-  private WebChromeClient mWebChromeClient = new WebChromeClient() {
-    @Override
-    public void onProgressChanged(WebView view, int newProgress) {
-      super.onProgressChanged(view, newProgress);
-      mActivity.setProgress(newProgress * 1000);
-    }
-  };
+//  private WebChromeClient mWebChromeClient = new WebChromeClient() {
+//    @Override
+//    public void onProgressChanged(WebView view, int newProgress) {
+//      super.onProgressChanged(view, newProgress);
+//      mActivity.setProgress(newProgress * 1000);
+//    }
+//  };
 
+
+  public EditText login;
+  public EditText password;
+  private ProgressDialog dialog;
+  private InputStream is;
+  private Button btnLogin;
+//  SecondActivity url;
 
   @SuppressLint("SetJavaScriptEnabled")
   @Override
   public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+      super.onCreate(savedInstanceState);
 
-    //Show web loading progress
-    getWindow().requestFeature(Window.FEATURE_PROGRESS);
+      setContentView(R.layout.activity_login);
+      mActivity = this;
 
-    setContentView(R.layout.esdk__webview);
-    mActivity = this;
+      btnLogin = (Button) findViewById(R.id.login);
+      login = (EditText) findViewById(R.id.editText);
+      password = (EditText) findViewById(R.id.editText2);
 
-    mWebView = (WebView) findViewById(R.id.esdk__webview);
-    mWebView.setWebViewClient(mWebViewClient);
-    mWebView.setWebChromeClient(mWebChromeClient);
-    mWebView.getSettings().setJavaScriptEnabled(true);
+     //Show web loading progress
+//     getWindow().requestFeature(Window.FEATURE_PROGRESS);
+
+//    mWebView = (WebView) findViewById(R.id.esdk__webview);
+//    mWebView.setWebViewClient(mWebViewClient);
+//    mWebView.setWebChromeClient(mWebChromeClient);
+//    mWebView.getSettings().setJavaScriptEnabled(true);
 
     if (savedInstanceState != null) {
       mEvernoteService = savedInstanceState.getParcelable(EXTRA_EVERNOTE_SERVICE);
@@ -151,16 +182,70 @@ public class EvernoteOAuthActivity extends Activity {
       mSelectedBootstrapProfile = (BootstrapProfile) savedInstanceState.getSerializable(EXTRA_BOOTSTRAP_SELECTED_PROFILE);
       mSelectedBootstrapProfilePos = savedInstanceState.getInt(EXTRA_BOOTSTRAP_SELECTED_PROFILE_POS);
       mBootstrapProfiles = (ArrayList<BootstrapProfile>) savedInstanceState.getSerializable(EXTRA_BOOTSTRAP_SELECTED_PROFILES);
-      mWebView.restoreState(savedInstanceState);
+
+      //      mWebView.restoreState(savedInstanceState);
 
     } else {
       Intent intent = getIntent();
       mEvernoteService = intent.getParcelableExtra(EXTRA_EVERNOTE_SERVICE);
       mConsumerKey = intent.getStringExtra(EXTRA_CONSUMER_KEY);
       mConsumerSecret = intent.getStringExtra(EXTRA_CONSUMER_SECRET);
+
     }
   }
 
+  class RequestTask extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                //создаем запрос на сервер
+                DefaultHttpClient hc = new DefaultHttpClient();
+                ResponseHandler<String> res = new BasicResponseHandler();
+                //он у нас будет посылать post запрос
+                HttpPost postMethod = new HttpPost(params[0]);
+                //будем передавать два параметра
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                //передаем параметры из наших текстбоксов
+                //лоигн
+                nameValuePairs.add(new BasicNameValuePair("username", login.getText().toString()));
+                //пароль
+                nameValuePairs.add(new BasicNameValuePair("password", password.getText().toString()));
+                //собераем их вместе и посылаем на сервер
+                postMethod.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                //получаем ответ от сервера
+                String response = hc.execute(postMethod, res);
+                //посылаем на вторую активность полученные параметры
+                Log.e(LOGTAG, "RESPONSE: " + response);
+//                Intent intent = new Intent(EvernoteOAuthActivity.this, SecondActivity.class);
+//                //то что куда мы будем передавать и что, putExtra(куда, что);
+//                intent.putExtra(SecondActivity.JsonURL, response.toString());
+//                startActivity(intent);
+            } catch (Exception e) {
+                Log.e(LOGTAG, "Error request: " , e);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            dialog.dismiss();
+            super.onPostExecute(result);
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+            dialog = new ProgressDialog(EvernoteOAuthActivity.this);
+            dialog.setMessage("Loading...");
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(true);
+            dialog.show();
+            super.onPreExecute();
+        }
+    }
   @Override
   protected void onResume() {
     super.onResume();
@@ -190,7 +275,7 @@ public class EvernoteOAuthActivity extends Activity {
     outState.putSerializable(EXTRA_BOOTSTRAP_SELECTED_PROFILE, mSelectedBootstrapProfile);
     outState.putInt(EXTRA_BOOTSTRAP_SELECTED_PROFILE_POS, mSelectedBootstrapProfilePos);
     outState.putSerializable(EXTRA_BOOTSTRAP_SELECTED_PROFILES, mBootstrapProfiles);
-    mWebView.saveState(outState);
+//    mWebView.saveState(outState);
 
     super.onSaveInstanceState(outState);
   }
@@ -363,8 +448,10 @@ public class EvernoteOAuthActivity extends Activity {
         if (session != null) {
           //Network request
           BootstrapManager.BootstrapInfoWrapper infoWrapper = session.getBootstrapSession().getBootstrapInfo();
+          Log.e(LOGTAG, "INFO WRAPPER: " + infoWrapper.getServerUrl());
 
           if (infoWrapper != null){
+            Log.e(LOGTAG, "INFO WRAPPER != NULL: " + infoWrapper.getServerUrl());
             BootstrapInfo info = infoWrapper.getBootstrapInfo();
             if(info != null) {
               mBootstrapProfiles = (ArrayList<BootstrapProfile>) info.getProfiles();
@@ -398,19 +485,32 @@ public class EvernoteOAuthActivity extends Activity {
       } catch (Exception ex) {
         Log.e(LOGTAG, "Failed to obtain OAuth request token", ex);
       }
+
+      Log.e(LOGTAG, "BOOTSTRAP URL: " + url);
       return url;
     }
 
-    /**
+      /**
      * Open a WebView to allow the user to authorize access to their account.
      * @param url The URL of the OAuth authorization web page.
      */
+
     @Override
-    protected void onPostExecute(String url) {
+    protected void onPostExecute(final String url) {
       // TODO deprecated
       removeDialog(DIALOG_PROGRESS);
       if (!TextUtils.isEmpty(url)) {
-        mWebView.loadUrl(url);
+
+//        mWebView.loadUrl(url);
+          Log.e(LOGTAG, "URL: " + url);
+          btnLogin.setOnClickListener(new View.OnClickListener() {
+
+              @Override
+              public void onClick(View v) {
+                  //тут указываем куда будем конектится, для примера я привел удаленных хост если у вас не получилось освоить wamp (:
+                  new RequestTask().execute(url);
+              }
+          });
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
           invalidateOptionsMenu();

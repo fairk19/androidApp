@@ -10,23 +10,36 @@ package com.evernote.androidsdk;
 public final class R {
     public static final class attr {
     }
+    public static final class drawable {
+        public static int ic_launcher=0x7f020000;
+        public static int img_login_logo=0x7f020001;
+        public static int login_button_pressed=0x7f020002;
+        public static int login_button_up=0x7f020003;
+        public static int login_states_button=0x7f020004;
+    }
     public static final class id {
-        public static int esdk__switch_service=0x7f050001;
-        public static int esdk__webview=0x7f050000;
+        public static int editText=0x7f060002;
+        public static int editText2=0x7f060003;
+        public static int esdk__switch_service=0x7f060006;
+        public static int esdk__webview=0x7f060005;
+        public static int imageView=0x7f060000;
+        public static int login=0x7f060004;
+        public static int textView=0x7f060001;
     }
     public static final class layout {
-        public static int esdk__webview=0x7f020000;
+        public static int activity_login=0x7f030000;
+        public static int esdk__webview=0x7f030001;
     }
     public static final class menu {
-        public static int esdk__oauth=0x7f040000;
+        public static int esdk__oauth=0x7f050000;
     }
     public static final class string {
-        public static int esdk__err_api_setup=0x7f030000;
-        public static int esdk__err_authentication=0x7f030001;
-        public static int esdk__err_protocol_version=0x7f030002;
-        public static int esdk__evernote=0x7f030003;
-        public static int esdk__evernote_login_failed=0x7f030004;
-        public static int esdk__evernote_login_successful=0x7f030005;
-        public static int esdk__loading=0x7f030006;
+        public static int esdk__err_api_setup=0x7f040000;
+        public static int esdk__err_authentication=0x7f040001;
+        public static int esdk__err_protocol_version=0x7f040002;
+        public static int esdk__evernote=0x7f040003;
+        public static int esdk__evernote_login_failed=0x7f040004;
+        public static int esdk__evernote_login_successful=0x7f040005;
+        public static int esdk__loading=0x7f040006;
     }
 }

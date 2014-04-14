@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="scribe-1.3.1">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/library/libs/scribe-1.3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/app/build/exploded-aar/Evernote/library/unspecified/libs/scribe-1.3.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

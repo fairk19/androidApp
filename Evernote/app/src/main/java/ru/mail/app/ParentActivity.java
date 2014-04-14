@@ -12,12 +12,6 @@ import com.evernote.client.android.EvernoteSession;
  */
 public class ParentActivity extends Activity {
 
-    /**
-     * ************************************************************************
-     * You MUST change the following values to run this sample application.    *
-     * *************************************************************************
-     */
-
     // Your Evernote API key. See http://dev.evernote.com/documentation/cloud/
     // Please obfuscate your code to help keep these values secret.
     private static final String CONSUMER_KEY = "fairk19";
@@ -29,11 +23,6 @@ public class ParentActivity extends Activity {
     // (Evernote China) production service.
     private static final EvernoteSession.EvernoteService EVERNOTE_SERVICE = EvernoteSession.EvernoteService.SANDBOX;
 
-    /**
-     * ************************************************************************
-     * The following values are simply part of the demo application.           *
-     * *************************************************************************
-     */
 
     protected EvernoteSession mEvernoteSession;
     protected final int DIALOG_PROGRESS = 101;

@@ -31,6 +31,66 @@
                 <string name="esdk__loading" >Loading...
                 </string>
             </file>
+            <file
+                name="ic_launcher"
+                path="C:\androidApp\Evernote\library\res\drawable-mdpi\ic_launcher.png"
+                qualifiers="mdpi"
+                type="drawable" />
+            <file
+                name="img_login_logo"
+                path="C:\androidApp\Evernote\library\res\drawable-xxhdpi\img_login_logo.png"
+                qualifiers="xxhdpi"
+                type="drawable" />
+            <file
+                name="ic_launcher"
+                path="C:\androidApp\Evernote\library\res\drawable-xxhdpi\ic_launcher.png"
+                qualifiers="xxhdpi"
+                type="drawable" />
+            <file
+                name="ic_launcher"
+                path="C:\androidApp\Evernote\library\res\drawable-hdpi\ic_launcher.png"
+                qualifiers="hdpi"
+                type="drawable" />
+            <file
+                name="img_login_logo"
+                path="C:\androidApp\Evernote\library\res\drawable-mdpi\img_login_logo.png"
+                qualifiers="mdpi"
+                type="drawable" />
+            <file
+                name="login_button_pressed"
+                path="C:\androidApp\Evernote\library\res\drawable-nodpi\login_button_pressed.xml"
+                qualifiers="nodpi"
+                type="drawable" />
+            <file
+                name="ic_launcher"
+                path="C:\androidApp\Evernote\library\res\drawable-xhdpi\ic_launcher.png"
+                qualifiers="xhdpi"
+                type="drawable" />
+            <file
+                name="login_states_button"
+                path="C:\androidApp\Evernote\library\res\drawable-nodpi\login_states_button.xml"
+                qualifiers="nodpi"
+                type="drawable" />
+            <file
+                name="login_button_up"
+                path="C:\androidApp\Evernote\library\res\drawable-nodpi\login_button_up.xml"
+                qualifiers="nodpi"
+                type="drawable" />
+            <file
+                name="img_login_logo"
+                path="C:\androidApp\Evernote\library\res\drawable-xhdpi\img_login_logo.png"
+                qualifiers="xhdpi"
+                type="drawable" />
+            <file
+                name="img_login_logo"
+                path="C:\androidApp\Evernote\library\res\drawable-hdpi\img_login_logo.png"
+                qualifiers="hdpi"
+                type="drawable" />
+            <file
+                name="activity_login"
+                path="C:\androidApp\Evernote\library\res\layout\activity_login.xml"
+                qualifiers=""
+                type="layout" />
         </source>
         <source path="C:\androidApp\Evernote\library\build\res\rs\release" />
         <source path="C:\androidApp\Evernote\library\build\res\generated\release" />
