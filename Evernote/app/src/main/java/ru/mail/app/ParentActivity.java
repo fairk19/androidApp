@@ -21,7 +21,7 @@ public class ParentActivity extends Activity {
     // Change to HOST_PRODUCTION to use the Evernote production service
     // once your code is complete, or HOST_CHINA to use the Yinxiang Biji
     // (Evernote China) production service.
-    private static final EvernoteSession.EvernoteService EVERNOTE_SERVICE = EvernoteSession.EvernoteService.SANDBOX;
+    protected static final EvernoteSession.EvernoteService EVERNOTE_SERVICE = EvernoteSession.EvernoteService.SANDBOX;
 
 
     protected EvernoteSession mEvernoteSession;

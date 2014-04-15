@@ -14,21 +14,29 @@
         android:layout_height="wrap_content"
         android:id="@+id/imageView"
         android:src="@drawable/img_login_logo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="48dp" />
+        />
 
     <Button
         android:layout_width="fill_parent"
-        android:layout_height="48dp"
-        android:text="SIGN IN"
+        android:layout_height="50dp"
+        android:text="Вход"
         android:textColor="#ffffff"
         android:textSize="16dp"
         android:id="@+id/login"
         android:onClick="login"
-        android:layout_below="@+id/imageView"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
         android:background="@drawable/login_states_button"
-     />
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginLeft="25dp"
+        android:layout_toRightOf="@+id/imageView" />
+
+    <ListView
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:id="@+id/list"
+        android:layout_below="@+id/imageView"/>
+
 </RelativeLayout>
+

@@ -132,7 +132,7 @@ public class BootstrapManager {
       i++;
       try {
         mUserStoreClient =  mClientProducer.createUserStoreClient(url);
-        Log.e(LOGTAG, "URL: " + url);
+        Log.e(LOGTAG, "URL USER STORE CLIENT: " + url);
         if (!mUserStoreClient.getClient().checkVersion(mClientProducer.getUserAgent(),
             com.evernote.edam.userstore.Constants.EDAM_VERSION_MAJOR,
             com.evernote.edam.userstore.Constants.EDAM_VERSION_MINOR)) {
