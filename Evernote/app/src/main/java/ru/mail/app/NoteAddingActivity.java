@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,21 +22,24 @@ import com.evernote.thrift.transport.TTransportException;
  * Created by vanik on 16.04.14.
  */
 public class NoteAddingActivity extends ParentActivity{
+
     private static final String MY_LOGGER = "myLogger";
     private EvernoteSession mEvernoteSession;
     private String mSelectedNotebookGuid = "Quality";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.note_adding_activity);
         mEvernoteSession = ParentActivity.getEvernoteSession();
     }
-    public void onSendClick(View v) {
-        TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
-        String title = (String) tvTitle.getText();
 
-        TextView tvBody = (TextView) findViewById(R.id.tvBody);
-        String body = (String) tvBody.getText();
+    public void onSendClick(View v) {
+        EditText etTitle = (EditText) findViewById(R.id.etTitle);
+        String title = etTitle.getText().toString();
+
+        EditText etBody = (EditText) findViewById(R.id.etBody);
+        String body =  etBody.getText().toString();
 
         if (TextUtils.isEmpty(title) || TextUtils.isEmpty(body)) {
             Toast.makeText(getApplicationContext(), R.string.empty_content_error, Toast.LENGTH_LONG).show();
