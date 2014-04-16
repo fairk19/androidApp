@@ -7,4 +7,17 @@
     <string name="action_logout">Выйти</string>
     <string name="title_activity_login">Авторизация</string>
 
+
+    <string name="btn_to_start_adding_note_activity">К добавлению записей</string>
+    <string name="note_title">Заголовок</string>
+    <string name="note_body">Тело заметки</string>
+    <string name="btnSend">Отправить</string>
+
+    <string name="empty_content_error">Note title and content cannot be empty</string>
+    <string name="error_creating_notestore">Error creating notestore</string>
+    <string name="note_saved">Note saved to Evernote</string>
+    <string name="error_saving_note">Error saving note</string>
+
+
+
 </resources>

@@ -112,4 +112,9 @@ public class MainActivity extends ParentActivity {
                 break;
         }
     }
+
+    public void startNoteAddingActivity(View v) {
+        Intent intent = new Intent(this, NoteAddingActivity.class);
+        startActivity(intent);
+    }
 }

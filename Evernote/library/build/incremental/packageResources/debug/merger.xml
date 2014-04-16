@@ -2,23 +2,73 @@
 <merger>
 
     <dataSet config="main" >
-        <source path="C:\androidApp\Evernote\library\res" >
-            <file
-                name="esdk__webview"
-                path="C:\androidApp\Evernote\library\res\layout\esdk__webview.xml"
-                qualifiers=""
-                type="layout" />
+        <source path="/home/vanik/TP/ThirdTerm/Mobile/projects/Evernote/projectFromGit/Evernote/library/res" >
             <file
                 name="esdk__oauth"
-                path="C:\androidApp\Evernote\library\res\menu\esdk__oauth.xml"
+                path="/home/vanik/TP/ThirdTerm/Mobile/projects/Evernote/projectFromGit/Evernote/library/res/menu/esdk__oauth.xml"
                 qualifiers=""
                 type="menu" />
             <file
-                path="C:\androidApp\Evernote\library\res\values\esdk__strings.xml"
+                name="ic_launcher"
+                path="/home/vanik/TP/ThirdTerm/Mobile/projects/Evernote/projectFromGit/Evernote/library/res/drawable-mdpi/ic_launcher.png"
+                qualifiers="mdpi"
+                type="drawable" />
+            <file
+                name="img_login_logo"
+                path="/home/vanik/TP/ThirdTerm/Mobile/projects/Evernote/projectFromGit/Evernote/library/res/drawable-mdpi/img_login_logo.png"
+                qualifiers="mdpi"
+                type="drawable" />
+            <file
+                name="ic_launcher"
+                path="/home/vanik/TP/ThirdTerm/Mobile/projects/Evernote/projectFromGit/Evernote/library/res/drawable-xxhdpi/ic_launcher.png"
+                qualifiers="xxhdpi"
+                type="drawable" />
+            <file
+                name="img_login_logo"
+                path="/home/vanik/TP/ThirdTerm/Mobile/projects/Evernote/projectFromGit/Evernote/library/res/drawable-xxhdpi/img_login_logo.png"
+                qualifiers="xxhdpi"
+                type="drawable" />
+            <file
+                name="activity_login"
+                path="/home/vanik/TP/ThirdTerm/Mobile/projects/Evernote/projectFromGit/Evernote/library/res/layout/activity_login.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="esdk__webview"
+                path="/home/vanik/TP/ThirdTerm/Mobile/projects/Evernote/projectFromGit/Evernote/library/res/layout/esdk__webview.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="ic_launcher"
+                path="/home/vanik/TP/ThirdTerm/Mobile/projects/Evernote/projectFromGit/Evernote/library/res/drawable-hdpi/ic_launcher.png"
+                qualifiers="hdpi"
+                type="drawable" />
+            <file
+                name="img_login_logo"
+                path="/home/vanik/TP/ThirdTerm/Mobile/projects/Evernote/projectFromGit/Evernote/library/res/drawable-hdpi/img_login_logo.png"
+                qualifiers="hdpi"
+                type="drawable" />
+            <file
+                name="login_states_button"
+                path="/home/vanik/TP/ThirdTerm/Mobile/projects/Evernote/projectFromGit/Evernote/library/res/drawable-nodpi/login_states_button.xml"
+                qualifiers="nodpi"
+                type="drawable" />
+            <file
+                name="login_button_up"
+                path="/home/vanik/TP/ThirdTerm/Mobile/projects/Evernote/projectFromGit/Evernote/library/res/drawable-nodpi/login_button_up.xml"
+                qualifiers="nodpi"
+                type="drawable" />
+            <file
+                name="login_button_pressed"
+                path="/home/vanik/TP/ThirdTerm/Mobile/projects/Evernote/projectFromGit/Evernote/library/res/drawable-nodpi/login_button_pressed.xml"
+                qualifiers="nodpi"
+                type="drawable" />
+            <file
+                path="/home/vanik/TP/ThirdTerm/Mobile/projects/Evernote/projectFromGit/Evernote/library/res/values/esdk__strings.xml"
                 qualifiers="" >
-                <string name="esdk__evernote" >Evernote
-                </string>
                 <string name="esdk__err_authentication" >Ошибка аутентификации в Evernote
+                </string>
+                <string name="esdk__evernote" >Evernote
                 </string>
                 <string name="esdk__err_protocol_version" >Incomatible EDAM client protocol version
                 </string>
@@ -33,70 +83,20 @@
             </file>
             <file
                 name="ic_launcher"
-                path="C:\androidApp\Evernote\library\res\drawable-mdpi\ic_launcher.png"
-                qualifiers="mdpi"
-                type="drawable" />
-            <file
-                name="img_login_logo"
-                path="C:\androidApp\Evernote\library\res\drawable-xxhdpi\img_login_logo.png"
-                qualifiers="xxhdpi"
-                type="drawable" />
-            <file
-                name="ic_launcher"
-                path="C:\androidApp\Evernote\library\res\drawable-xxhdpi\ic_launcher.png"
-                qualifiers="xxhdpi"
-                type="drawable" />
-            <file
-                name="ic_launcher"
-                path="C:\androidApp\Evernote\library\res\drawable-hdpi\ic_launcher.png"
-                qualifiers="hdpi"
-                type="drawable" />
-            <file
-                name="img_login_logo"
-                path="C:\androidApp\Evernote\library\res\drawable-mdpi\img_login_logo.png"
-                qualifiers="mdpi"
-                type="drawable" />
-            <file
-                name="login_button_pressed"
-                path="C:\androidApp\Evernote\library\res\drawable-nodpi\login_button_pressed.xml"
-                qualifiers="nodpi"
-                type="drawable" />
-            <file
-                name="ic_launcher"
-                path="C:\androidApp\Evernote\library\res\drawable-xhdpi\ic_launcher.png"
+                path="/home/vanik/TP/ThirdTerm/Mobile/projects/Evernote/projectFromGit/Evernote/library/res/drawable-xhdpi/ic_launcher.png"
                 qualifiers="xhdpi"
                 type="drawable" />
             <file
-                name="login_states_button"
-                path="C:\androidApp\Evernote\library\res\drawable-nodpi\login_states_button.xml"
-                qualifiers="nodpi"
-                type="drawable" />
-            <file
-                name="login_button_up"
-                path="C:\androidApp\Evernote\library\res\drawable-nodpi\login_button_up.xml"
-                qualifiers="nodpi"
-                type="drawable" />
-            <file
                 name="img_login_logo"
-                path="C:\androidApp\Evernote\library\res\drawable-xhdpi\img_login_logo.png"
+                path="/home/vanik/TP/ThirdTerm/Mobile/projects/Evernote/projectFromGit/Evernote/library/res/drawable-xhdpi/img_login_logo.png"
                 qualifiers="xhdpi"
-                type="drawable" />
-            <file
-                name="activity_login"
-                path="C:\androidApp\Evernote\library\res\layout\activity_login.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="img_login_logo"
-                path="C:\androidApp\Evernote\library\res\drawable-hdpi\img_login_logo.png"
-                qualifiers="hdpi"
                 type="drawable" />
         </source>
-        <source path="C:\androidApp\Evernote\library\build\res\rs\debug" />
-        <source path="C:\androidApp\Evernote\library\build\res\generated\debug" />
+        <source path="/home/vanik/TP/ThirdTerm/Mobile/projects/Evernote/projectFromGit/Evernote/library/build/res/rs/debug" />
+        <source path="/home/vanik/TP/ThirdTerm/Mobile/projects/Evernote/projectFromGit/Evernote/library/build/res/generated/debug" />
     </dataSet>
     <dataSet config="debug" >
-        <source path="C:\androidApp\Evernote\library\src\debug\res" />
+        <source path="/home/vanik/TP/ThirdTerm/Mobile/projects/Evernote/projectFromGit/Evernote/library/src/debug/res" />
     </dataSet>
 
 </merger>
