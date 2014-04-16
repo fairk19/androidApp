@@ -3,7 +3,7 @@
 
     <string name="app_name">Evernote</string>
     <string name="action_settings">Настройки</string>
-    <string name="action_login">Вход</string>
+    <string name="action_login">Войти</string>
     <string name="action_logout">Выйти</string>
     <string name="title_activity_login">Авторизация</string>
 

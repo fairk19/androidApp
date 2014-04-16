@@ -3,6 +3,7 @@
     package="ru.mail.app" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/img_login_logo"
@@ -17,8 +18,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.evernote.client.android.EvernoteOAuthActivity"
+        <activity
+            android:name="com.evernote.client.android.EvernoteOAuthActivity"
             android:configChanges="orientation|keyboardHidden" />
+
+        <service
+            android:name="ru.mail.app.ServiceSynchronous"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+
+        <provider
+            android:name="ru.mail.app.NoteStoreContentProvider"
+            android:authorities="ru.mail.app.provider"
+            android:enabled="true"
+            android:exported="true" >
+        </provider>
     </application>
 
 </manifest>

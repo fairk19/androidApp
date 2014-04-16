@@ -24,7 +24,7 @@ public class ParentActivity extends Activity {
     protected static final EvernoteSession.EvernoteService EVERNOTE_SERVICE = EvernoteSession.EvernoteService.SANDBOX;
 
 
-    protected EvernoteSession mEvernoteSession;
+    protected  static EvernoteSession mEvernoteSession;
     protected final int DIALOG_PROGRESS = 101;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -55,4 +55,6 @@ public class ParentActivity extends Activity {
                 ((ProgressDialog) dialog).setMessage(getString(R.string.esdk__loading));
         }
     }
+
+    public static EvernoteSession getEvernoteSession() { return mEvernoteSession; }
 }
