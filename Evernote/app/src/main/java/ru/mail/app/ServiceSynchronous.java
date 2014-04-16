@@ -3,19 +3,25 @@ package ru.mail.app;
 import android.app.Service;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.IBinder;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.evernote.client.android.EvernoteSession;
 import com.evernote.client.android.OnClientCallback;
+import com.evernote.edam.notestore.NoteFilter;
+import com.evernote.edam.notestore.NoteMetadata;
+import com.evernote.edam.notestore.NotesMetadataList;
+import com.evernote.edam.notestore.NotesMetadataResultSpec;
+import com.evernote.edam.type.NoteSortOrder;
 import com.evernote.edam.type.Notebook;
 import com.evernote.thrift.transport.TTransportException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class ServiceSynchronous extends Service {
 
@@ -37,12 +43,6 @@ public class ServiceSynchronous extends Service {
                         namesList.add(notebook.getName());
                     }
                     String notebookNames = TextUtils.join(", ", namesList);
-                    ContentValues contentValues = new ContentValues();
-                    contentValues.put(NoteStoreContentProvider.NOTE_TITLE, notebookNames);
-                    contentValues.put(NoteStoreContentProvider.NOTE_CONTENT, "content");
-                    contentValues.put(NoteStoreContentProvider.NOTE_GUID, "1q2w3e4r5t");
-                    Uri newUri = getContentResolver().insert(NOTE_URI, contentValues);
-                    Log.d(LOG_TAG, "Add new uri for notebook = " + newUri);
                 }
 
                 @Override
@@ -83,10 +83,58 @@ public class ServiceSynchronous extends Service {
 
     void synchronization() {
         try {
-            listNotebooks();
+
+            listNotes();
 
         } catch (Exception e) {
             Log.v(LOG_TAG, e.toString());
         }
+    }
+
+    public void listNotes() {
+        int offset = 0;
+        int pageSize = 10;
+
+        NoteFilter filter = new NoteFilter();
+        filter.setOrder(NoteSortOrder.UPDATED.getValue());
+        NotesMetadataResultSpec spec = new NotesMetadataResultSpec();
+        spec.setIncludeTitle(true);
+        try{
+            mEvernoteSession.getClientFactory().createNoteStoreClient()
+                    .findNotesMetadata(filter, offset, pageSize, spec, new OnClientCallback<NotesMetadataList>() {
+                        @Override
+                        public void onSuccess(NotesMetadataList data) {
+                            Toast.makeText(getApplicationContext(), R.string.success_creating_notestore, Toast.LENGTH_LONG).show();
+
+                            for(NoteMetadata note : data.getNotes()) {
+                                String title = note.getTitle();
+                                int content = note.getContentLength();
+                                String guid = note.getGuid();
+                                ContentValues contentValues = new ContentValues();
+                                contentValues.put(NoteStoreContentProvider.NOTE_TITLE, title);
+                                contentValues.put(NoteStoreContentProvider.NOTE_CONTENT, content);
+                                contentValues.put(NoteStoreContentProvider.NOTE_GUID, guid);
+
+                                Cursor cursor = getContentResolver().query(NOTE_URI, null, null,
+                                        null, null);
+
+                                Uri newUri = getContentResolver().insert(NOTE_URI, contentValues);
+                                Log.d(LOG_TAG, "Add new uri for notebook = " + newUri);
+                            }
+                        }
+
+                        @Override
+                        public void onException(Exception exception) {
+                            onError(exception, "Error listing notes. ", R.string.error_creating_notestore);
+                        }
+                    });
+        } catch (TTransportException exception){
+            onError(exception, "Error creating notestore. ", R.string.error_creating_notestore);
+        }
+    }
+
+    public void onError(Exception exception, String logstr, int id){
+        Log.e(LOG_TAG, logstr + exception);
+        Toast.makeText(getApplicationContext(), id, Toast.LENGTH_LONG).show();
     }
 }

@@ -18,7 +18,7 @@
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:text="@string/action_login"
         android:textColor="#ffffff"
         android:textSize="16dp"
@@ -29,6 +29,19 @@
         android:layout_marginRight="25dp"
         android:layout_marginTop="25dp"
         />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="@string/action_logout"
+        android:textColor="#ffffff"
+        android:textSize="16dp"
+        android:id="@+id/logout"
+        android:onClick="logout"
+        android:background="@drawable/login_states_button"
+        android:layout_marginLeft="125dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="70dp"
+        />
 
     <ListView
         android:layout_height="match_parent"
@@ -37,7 +50,7 @@
         android:id="@+id/noteList"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/imageView"/>
+        android:layout_below="@+id/logout"/>
 
 </RelativeLayout>
 

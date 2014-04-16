@@ -17,13 +17,12 @@ import android.widget.SimpleCursorAdapter;
 import com.evernote.client.android.EvernoteSession;
 import com.evernote.client.android.InvalidAuthenticationException;
 
-import java.util.Random;
-
 public class MainActivity extends ParentActivity {
 
     private static final String LOGTAG = "MainActivity";
 
     private Button mLoginButton;
+    private Button mLogoutButton;
     private ListView lvNotes;
     private SimpleCursorAdapter scAdapter;
 
@@ -41,6 +40,7 @@ public class MainActivity extends ParentActivity {
         setContentView(R.layout.activity_main);
 
         mLoginButton = (Button) findViewById(R.id.login);
+        mLogoutButton = (Button) findViewById(R.id.logout);
 
         Cursor cursor = getContentResolver().query(NOTE_URI, null, null,
                 null, null);
@@ -57,11 +57,16 @@ public class MainActivity extends ParentActivity {
     @Override
     public void onResume() {
         super.onResume();
+        updateAuthUi();
+        startService(new Intent(this, ServiceSynchronous.class));
     }
 
     private void updateAuthUi() {
         //show login button if logged out
         mLoginButton.setEnabled(!mEvernoteSession.isLoggedIn());
+
+        //Show logout button if logged in
+        mLogoutButton.setEnabled(mEvernoteSession.isLoggedIn());
     }
 
     public void logout(View view) {
@@ -106,7 +111,7 @@ public class MainActivity extends ParentActivity {
             //Update UI when oauth activity returns result
             case EvernoteSession.REQUEST_CODE_OAUTH:
                 if (resultCode == Activity.RESULT_OK) {
-//                        updateAuthUi();
+                        updateAuthUi();
                         startService(new Intent(this, ServiceSynchronous.class));
                 }
                 break;
