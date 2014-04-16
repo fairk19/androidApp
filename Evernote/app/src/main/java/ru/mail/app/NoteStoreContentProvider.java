@@ -21,8 +21,8 @@ public class NoteStoreContentProvider extends ContentProvider {
     static final int DB_VERSION = 1;
 
     // Таблица
-    static final String NOTEBOOK_TABLE = "notebook";
-    static final String NOTE_TABLE = "note";
+    static final String NOTEBOOK_TABLE = "notebooks";
+    static final String NOTE_TABLE = "notes";
 
     // Поля
     static final String NOTEBOOK_GUID = "_id";
@@ -93,7 +93,7 @@ public class NoteStoreContentProvider extends ContentProvider {
             case URI_NOTES:
                 Log.d(LOG_TAG, "URI_NOTES");
                 if (TextUtils.isEmpty(sortOrder)) {
-                    sortOrder = NOTE_TITLE + " ASC";
+                    sortOrder = NOTE_GUID + " ASC";
                 }
                 break;
             default:
@@ -108,8 +108,19 @@ public class NoteStoreContentProvider extends ContentProvider {
         return cursor;
     }
 
-    public Uri insert(Uri uri, ContentValues values) {
-        return null;
+    public Uri insert(Uri uri, ContentValues contentValues) {
+        Log.d(LOG_TAG, "insert");
+        if (uriMatcher.match(uri) != URI_NOTES_ID && uriMatcher.match(uri) != URI_NOTES)
+            throw new IllegalArgumentException("Wrong URI: " + uri);
+
+        String tableName = uri.getPath().substring(1, uri.getPath().length());
+        db = dbHelper.getWritableDatabase();
+        long rowID = db.insert(tableName, null, contentValues);
+        Uri resultUri = ContentUris.withAppendedId(uri, rowID);
+
+        // уведомляем ContentResolver, что данные по адресу resultUri изменились
+        getContext().getContentResolver().notifyChange(resultUri, null);
+        return resultUri;
     }
 
     public int delete(Uri uri, String selection, String[] selectionArgs) {
@@ -133,13 +144,7 @@ public class NoteStoreContentProvider extends ContentProvider {
 
         public void onCreate(SQLiteDatabase db) {
             db.execSQL(DB_CREATE_NOTE);
-            ContentValues cv = new ContentValues();
-            for (int i = 1; i <= 3; i++) {
-                cv.put(NOTE_GUID, "guid " + i);
-                cv.put(NOTE_TITLE, "title " + i);
-                cv.put(NOTE_CONTENT, "content " + i);
-                db.insert(NOTE_TABLE, null, cv);
-            }
+            db.execSQL(DB_CREATE_NOTEBOOK);
         }
 
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

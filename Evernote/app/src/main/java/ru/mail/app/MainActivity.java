@@ -1,6 +1,7 @@
 package ru.mail.app;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -16,6 +17,8 @@ import android.widget.SimpleCursorAdapter;
 import com.evernote.client.android.EvernoteSession;
 import com.evernote.client.android.InvalidAuthenticationException;
 
+import java.util.Random;
+
 public class MainActivity extends ParentActivity {
 
     private static final String LOGTAG = "MainActivity";
@@ -27,7 +30,9 @@ public class MainActivity extends ParentActivity {
     final Uri NOTE_URI = Uri
             .parse("content://ru.mail.app.provider/notes");
 
-    final String NOTE_TITLE = "title";
+    static final String NOTE_GUID = "_id";
+    static final String NOTE_TITLE = "title";
+    static final String NOTE_CONTENT = "content";
 
 
     @Override
@@ -40,14 +45,13 @@ public class MainActivity extends ParentActivity {
         Cursor cursor = getContentResolver().query(NOTE_URI, null, null,
                 null, null);
 
-        String[] from = new String[]{ NOTE_TITLE };
-        int[] to = new int[]{ R.id.title};
+        String[] from = new String[]{ NOTE_GUID, NOTE_TITLE, NOTE_CONTENT };
+        int[] to = new int[]{ R.id.guid, R.id.title, R.id.content };
         scAdapter = new SimpleCursorAdapter(this,
                 R.layout.item_note_list, cursor, from, to);
 
         lvNotes = (ListView) findViewById(R.id.noteList);
         lvNotes.setAdapter(scAdapter);
-
     }
 
     @Override
