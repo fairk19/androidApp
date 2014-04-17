@@ -10,16 +10,13 @@
     <string name="success_creating_notestore">Синхронизация прошла успешно</string>
 
 
-    <string name="btn_to_start_adding_note_activity">К добавлению записей</string>
+    <string name="btn_to_start_adding_note_activity">Создать заметку</string>
     <string name="note_title">Заголовок</string>
     <string name="note_body">Тело заметки</string>
-    <string name="btnSend">Отправить</string>
+    <string name="btnSend">Сохранить</string>
 
-    <string name="empty_content_error">Note title and content cannot be empty</string>
-    <string name="error_creating_notestore">Error creating notestore</string>
-    <string name="note_saved">Note saved to Evernote</string>
-    <string name="error_saving_note">Error saving note</string>
-
-
+    <string name="empty_content_error">Заголово или содержание не может быть пустым</string>
+    <string name="note_saved">Заметка добавленна</string>
+    <string name="error_saving_note">Ошибка при создании заметки</string>
 
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- From: file:/home/vanik/TP/ThirdTerm/Mobile/projects/Evernote/projectFromGit/Evernote/library/res/values/esdk__strings.xml -->
+    <!-- From: file:/C:/androidApp/Evernote/library/res/values/esdk__strings.xml -->
     <eat-comment />
 
     <string name="esdk__err_api_setup">Ошибка инициализации Evernote API</string>

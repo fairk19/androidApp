@@ -1,7 +1,6 @@
 package ru.mail.app;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -23,6 +22,7 @@ public class MainActivity extends ParentActivity {
 
     private Button mLoginButton;
     private Button mLogoutButton;
+    private Button mCreateNoteButton;
     private ListView lvNotes;
     private SimpleCursorAdapter scAdapter;
 
@@ -41,6 +41,7 @@ public class MainActivity extends ParentActivity {
 
         mLoginButton = (Button) findViewById(R.id.login);
         mLogoutButton = (Button) findViewById(R.id.logout);
+        mCreateNoteButton = (Button) findViewById(R.id.createNote);
 
         Cursor cursor = getContentResolver().query(NOTE_URI, null, null,
                 null, null);
@@ -62,11 +63,10 @@ public class MainActivity extends ParentActivity {
     }
 
     private void updateAuthUi() {
-        //show login button if logged out
-        mLoginButton.setEnabled(!mEvernoteSession.isLoggedIn());
 
-        //Show logout button if logged in
+        mLoginButton.setEnabled(!mEvernoteSession.isLoggedIn());
         mLogoutButton.setEnabled(mEvernoteSession.isLoggedIn());
+        mCreateNoteButton.setEnabled(mEvernoteSession.isLoggedIn());
     }
 
     public void logout(View view) {
