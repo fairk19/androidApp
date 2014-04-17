@@ -15,7 +15,6 @@
         android:id="@+id/imageView"
         android:src="@drawable/img_login_logo"
         />
-
     <Button
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -42,6 +41,15 @@
         android:layout_marginRight="25dp"
         android:layout_marginTop="70dp"
         />
+
+    <Button
+        android:onClick="startNoteAddingActivity"
+        android:id="@+id/btnToStartAddingNoteActivity"
+        android:text="@string/btn_to_start_adding_note_activity"
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft="130dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <ListView
         android:layout_height="match_parent"

@@ -22,6 +22,9 @@
             android:name="com.evernote.client.android.EvernoteOAuthActivity"
             android:configChanges="orientation|keyboardHidden" />
 
+        <activity android:name="ru.mail.app.NoteAddingActivity">
+        </activity>
+
         <service
             android:name="ru.mail.app.ServiceSynchronous"
             android:enabled="true"
