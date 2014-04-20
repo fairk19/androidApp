@@ -4,4 +4,4 @@
     <item android:state_pressed="true"
         android:drawable="@drawable/login_button_pressed" /> <!-- pressed -->
     <item android:drawable="@drawable/login_button_up" /> <!-- default -->
-</selector><!-- From: file:/C:/androidApp/Evernote/library/res/drawable-nodpi/login_states_button.xml -->
+</selector><!-- From: file:/home/vanik/TP/ThirdTerm/Mobile/projects/Evernote/projectFromGit/Evernote/library/res/drawable-nodpi/login_states_button.xml -->
