@@ -16,15 +16,28 @@
         android:layout_height="wrap_content" />
     <Button
         android:id="@+id/btnSend"
-        android:hint="@string/btn_send"
+        android:text="@string/btn_send"
         android:onClick="saveNote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <Button
         android:id="@+id/btnSelectNotebook"
-        android:hint="@string/btn_select_notebook"
+        android:text="@string/btn_select_notebook"
         android:onClick="selectNotebook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/btnShowAllNotes"
+        android:text="@string/btn_show_all_notes"
+        android:onClick="showAllNotesClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    <ListView
+        android:id="@+id/lvAllNotes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </ListView>
 
 </LinearLayout>

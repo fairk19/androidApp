@@ -10,14 +10,22 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.evernote.client.android.AsyncBusinessNoteStoreClient;
+import com.evernote.client.android.AsyncNoteStoreClient;
+import com.evernote.client.android.ClientFactory;
 import com.evernote.client.android.EvernoteSession;
+import com.evernote.client.android.EvernoteUtil;
 import com.evernote.client.android.OnClientCallback;
 import com.evernote.edam.notestore.NoteFilter;
+import com.evernote.edam.notestore.NoteList;
 import com.evernote.edam.notestore.NoteMetadata;
+import com.evernote.edam.notestore.NoteStore;
 import com.evernote.edam.notestore.NotesMetadataList;
 import com.evernote.edam.notestore.NotesMetadataResultSpec;
 import com.evernote.edam.type.NoteSortOrder;
 import com.evernote.edam.type.Notebook;
+import com.evernote.edam.type.Note;
+import com.evernote.edam.userstore.UserStore;
 import com.evernote.thrift.transport.TTransportException;
 
 import java.util.ArrayList;
@@ -93,44 +101,85 @@ public class ServiceSynchronous extends Service {
 
     public void listNotes() {
         int offset = 0;
-        int pageSize = 10;
+        int maxNotes = 100;
 
         NoteFilter filter = new NoteFilter();
         filter.setOrder(NoteSortOrder.UPDATED.getValue());
         NotesMetadataResultSpec spec = new NotesMetadataResultSpec();
         spec.setIncludeTitle(true);
-        try{
-            mEvernoteSession.getClientFactory().createNoteStoreClient()
-                    .findNotesMetadata(filter, offset, pageSize, spec, new OnClientCallback<NotesMetadataList>() {
-                        @Override
-                        public void onSuccess(NotesMetadataList data) {
-                            Toast.makeText(getApplicationContext(), R.string.success_creating_notestore, Toast.LENGTH_LONG).show();
+            try {
 
-                            for(NoteMetadata note : data.getNotes()) {
-                                String title = note.getTitle();
-                                int content = note.getContentLength();
-                                String guid = note.getGuid();
-                                ContentValues contentValues = new ContentValues();
-                                contentValues.put(NoteStoreContentProvider.NOTE_TITLE, title);
-                                contentValues.put(NoteStoreContentProvider.NOTE_CONTENT, content);
-                                contentValues.put(NoteStoreContentProvider.NOTE_GUID, guid);
+                ClientFactory clientFactory = mEvernoteSession.getClientFactory();
+                AsyncNoteStoreClient client =  clientFactory.createNoteStoreClient();
+                NoteFilter noteFilter = new NoteFilter();
+                noteFilter.setOrder(NoteSortOrder.UPDATED.getValue());
 
-                                Cursor cursor = getContentResolver().query(NOTE_URI, null, null,
-                                        null, null);
 
-                                Uri newUri = getContentResolver().insert(NOTE_URI, contentValues);
-                                Log.d(LOG_TAG, "Add new uri for notebook = " + newUri);
+                mEvernoteSession.getClientFactory().createNoteStoreClient().findNotes(noteFilter,offset, maxNotes, new OnClientCallback<NoteList>() {
+                    @Override
+                    public void onSuccess(NoteList noteList) {
+                        for(final Note note: noteList.getNotes()) {
+                            String noteGuid = note.getGuid();
+                            String[] args = {noteGuid};
+                            //проверяем, есть ли в локальной базе запись с таким guid
+                            Cursor cursor =  getContentResolver().query(NoteStoreContentProvider.NOTE_CONTENT_URI, null, "_id = ?", args, null );
+                            if (!cursor.moveToFirst()) {
+                                //такой записи нет=> запись с сервера можно добавить в локальную базу
+                                Log.d(LOG_TAG, "Записи с guid  = " + noteGuid + " в локальной базе нет");
+
+                                try {
+                                    //запрашиваем с сервера текст(контент) записи
+                                    mEvernoteSession.getClientFactory().createNoteStoreClient().getNoteContent(note.getGuid(),new OnClientCallback<String>() {
+                                        @Override
+                                        public void onSuccess(String content) {
+                                            Log.d(LOG_TAG, content);
+                                            content = content.replace(EvernoteUtil.NOTE_PREFIX,"");
+                                            content = content.replace(EvernoteUtil.NOTE_SUFFIX, "");
+                                            ContentValues cv = new ContentValues();
+                                            cv.put(NoteStoreContentProvider.NOTE_GUID, note.getGuid());
+                                            cv.put(NoteStoreContentProvider.NOTE_TITLE, note.getTitle());
+                                            cv.put(NoteStoreContentProvider.NOTE_CONTENT, content );
+                                            Uri newUri = getContentResolver().insert(NoteStoreContentProvider.NOTE_CONTENT_URI, cv);
+                                        }
+
+                                        @Override
+                                        public void onException(Exception exception) {
+                                            exception.printStackTrace();
+                                        }
+                                    });
+
+                                } catch (TTransportException e) {
+                                    e.printStackTrace();
+                                }
+
                             }
-                        }
 
-                        @Override
-                        public void onException(Exception exception) {
-                            onError(exception, "Error listing notes. ", R.string.error_creating_notestore);
                         }
-                    });
-        } catch (TTransportException exception){
-            onError(exception, "Error creating notestore. ", R.string.error_creating_notestore);
-        }
+                    }
+
+                    @Override
+                    public void onException(Exception exception) {
+                    }
+                });
+                mEvernoteSession.getClientFactory().createNoteStoreClient().listNotebooks(new OnClientCallback<List<Notebook>>() {
+                    @Override
+                    public void onSuccess(final List<Notebook> notebooks) {
+                        //This is running in the UI Thread
+                        Log.d(LOG_TAG, "Notebook count=" + notebooks.size());
+                        for (Notebook notebook : notebooks) {
+                            Log.d(LOG_TAG, notebook.getGuid());
+                        }
+                    }
+
+                    @Override
+                    public void onException(Exception exception) {
+                        //This is running in the UI Thread
+                        Log.e(LOG_TAG, "Error listing notebooks", exception);
+                    }
+                });
+            } catch (TTransportException e) {
+                e.printStackTrace();
+            }
     }
 
     public void onError(Exception exception, String logstr, int id){
