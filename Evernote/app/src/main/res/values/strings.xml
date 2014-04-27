@@ -12,7 +12,7 @@
     <string name="ok">OK</string>
     <string name="error_listing_notebooks">Error listing notebooks</string>
 
-
+    <string name="btn_edit_note">Редактировать</string>
     <string name="btn_to_start_adding_note_activity">Создать заметку</string>
     <string name="note_title">Заголовок</string>
     <string name="note_body">Тело заметки</string>

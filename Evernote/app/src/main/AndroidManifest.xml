@@ -25,6 +25,9 @@
         <activity android:name="ru.mail.app.NoteAddingActivity">
         </activity>
 
+        <activity android:name="ru.mail.app.NoteShowingActivity">
+        </activity>
+
         <service
             android:name="ru.mail.app.ServiceSynchronous"
             android:enabled="true"

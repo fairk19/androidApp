@@ -1,6 +1,7 @@
 package ru.mail.app;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -43,7 +45,7 @@ public class MainActivity extends ParentActivity {
         mLogoutButton = (Button) findViewById(R.id.logout);
         mCreateNoteButton = (Button) findViewById(R.id.createNote);
 
-        Cursor cursor = getContentResolver().query(NOTE_URI, null, null,
+        final Cursor cursor = getContentResolver().query(NOTE_URI, null, null,
                 null, null);
 
         String[] from = new String[]{ NOTE_GUID, NOTE_TITLE, NOTE_CONTENT };
@@ -53,6 +55,7 @@ public class MainActivity extends ParentActivity {
 
         lvNotes = (ListView) findViewById(R.id.noteList);
         lvNotes.setAdapter(scAdapter);
+        lvNotes.setOnItemClickListener(new ItemClickListener(this, cursor));
     }
 
     @Override
