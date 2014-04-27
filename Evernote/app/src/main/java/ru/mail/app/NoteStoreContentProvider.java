@@ -129,6 +129,17 @@ public class NoteStoreContentProvider extends ContentProvider {
 
     public int update(Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
+        if(uriMatcher.match(uri) != URI_NOTES_ID) {
+            db = dbHelper.getWritableDatabase();
+            String id = uri.getLastPathSegment();
+            if (TextUtils.isEmpty(selection)){
+                selection = NOTE_GUID + " = \"" + id+ "\"";
+            } else {
+                selection = selection + " and " + NOTE_GUID + " = " + id;
+            }
+            int cnt = db.update(NOTE_TABLE, values, selection, selectionArgs);
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
         return 0;
     }
 
