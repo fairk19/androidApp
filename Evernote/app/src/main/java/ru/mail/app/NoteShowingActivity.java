@@ -18,7 +18,7 @@ import android.widget.TextView;
  * Created by vanik on 27.04.14.
  */
 public class NoteShowingActivity extends Activity {
-    private static final String LOGTAG = "myLogger";
+    private static final String LOGTAG = "NoteShowingActivity";
     private Intent intent;
     private NoteShowingFragment noteShowingFragment;
     private NoteEditFragment noteEditFragment;
@@ -48,7 +48,7 @@ public class NoteShowingActivity extends Activity {
         ft.commit();
         EditText etTitle = (EditText) noteEditFragment.getView().findViewById(R.id.etTitle);
         EditText etContent = (EditText) noteEditFragment.getView().findViewById(R.id.etContent);
-        String guid = intent.getStringExtra("guid");
+        String guid = intent.getStringExtra("_id");
         String title = etTitle.getText().toString();
         String content = etContent.getText().toString();
         ContentValues cv = new ContentValues();

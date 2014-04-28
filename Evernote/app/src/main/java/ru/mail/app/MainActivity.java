@@ -1,7 +1,7 @@
 package ru.mail.app;
 
 import android.app.Activity;
-import android.content.Context;
+import android.content.ContentUris;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -10,13 +10,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 import com.evernote.client.android.EvernoteSession;
-import com.evernote.client.android.InvalidAuthenticationException;
+
 
 public class MainActivity extends ParentActivity {
 
@@ -28,14 +27,6 @@ public class MainActivity extends ParentActivity {
     private ListView lvNotes;
     private SimpleCursorAdapter scAdapter;
 
-    final Uri NOTE_URI = Uri
-            .parse("content://ru.mail.app.provider/notes");
-
-    static final String NOTE_GUID = "_id";
-    static final String NOTE_TITLE = "title";
-    static final String NOTE_CONTENT = "content";
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,10 +36,10 @@ public class MainActivity extends ParentActivity {
         mLogoutButton = (Button) findViewById(R.id.logout);
         mCreateNoteButton = (Button) findViewById(R.id.createNote);
 
-        final Cursor cursor = getContentResolver().query(NOTE_URI, null, null,
+        final Cursor cursor = getContentResolver().query(NoteStoreContentProvider.NOTE_CONTENT_URI, null, null,
                 null, null);
 
-        String[] from = new String[]{ NOTE_GUID, NOTE_TITLE, NOTE_CONTENT };
+        String[] from = new String[]{ NoteStoreContentProvider.NOTE_GUID, NoteStoreContentProvider.NOTE_TITLE, NoteStoreContentProvider.NOTE_CONTENT };
         int[] to = new int[]{ R.id.guid, R.id.title, R.id.content };
         scAdapter = new SimpleCursorAdapter(this,
                 R.layout.item_note_list, cursor, from, to);
@@ -72,12 +63,28 @@ public class MainActivity extends ParentActivity {
         mCreateNoteButton.setEnabled(mEvernoteSession.isLoggedIn());
     }
 
-    public void logout(View view) {
-        try {
-            mEvernoteSession.logOut(this);
-        } catch (InvalidAuthenticationException e) {
-            Log.e(LOGTAG, "Tried to call logout with not logged in", e);
+    private void deleteAllNotesFromDB(){
+
+        Cursor cursor = getContentResolver().query(NoteStoreContentProvider.NOTE_CONTENT_URI, null, null,
+                null, null);
+
+        int i = 0;
+        while (cursor.moveToNext()){
+            ++i;
+            Uri uri = ContentUris.withAppendedId(NoteStoreContentProvider.NOTE_CONTENT_URI, i);
+            getContentResolver().delete(uri, cursor.getString(0), null);
+            Log.d(LOGTAG, "delete id = " +  cursor.getString(0) + "\n");
         }
+        Log.d(LOGTAG, "deleted " + i + " count notes\n");
+    }
+
+    public void logout(View view) {
+//        try {
+              deleteAllNotesFromDB();
+//            mEvernoteSession.logOut(this);
+//        } catch (InvalidAuthenticationException e) {
+//            Log.e(LOGTAG, "Tried to call logout with not logged in", e);
+//        }
         updateAuthUi();
     }
 
@@ -103,22 +110,6 @@ public class MainActivity extends ParentActivity {
 
     public void login(View view) {
         mEvernoteSession.authenticate(this);
-    }
-
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            //Update UI when oauth activity returns result
-            case EvernoteSession.REQUEST_CODE_OAUTH:
-                if (resultCode == Activity.RESULT_OK) {
-                        updateAuthUi();
-                        startService(new Intent(this, ServiceSynchronous.class));
-                }
-                break;
-        }
     }
 
     public void startNoteAddingActivity(View v) {

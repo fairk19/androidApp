@@ -122,7 +122,7 @@ public class ServiceSynchronous extends Service {
                             String noteGuid = note.getGuid();
                             String[] args = {noteGuid};
                             //проверяем, есть ли в локальной базе запись с таким guid
-                            Cursor cursor =  getContentResolver().query(NoteStoreContentProvider.NOTE_CONTENT_URI, null, "_id = ?", args, null );
+                            Cursor cursor =  getContentResolver().query(NoteStoreContentProvider.NOTE_CONTENT_URI, null, "guid = ?", args, null );
                             if (!cursor.moveToFirst()) {
                                 //такой записи нет=> запись с сервера можно добавить в локальную базу
                                 Log.d(LOG_TAG, "Записи с guid  = " + noteGuid + " в локальной базе нет");
@@ -139,7 +139,7 @@ public class ServiceSynchronous extends Service {
                                             cv.put(NoteStoreContentProvider.NOTE_GUID, note.getGuid());
                                             cv.put(NoteStoreContentProvider.NOTE_TITLE, note.getTitle());
                                             cv.put(NoteStoreContentProvider.NOTE_CONTENT, content );
-                                            Uri newUri = getContentResolver().insert(NoteStoreContentProvider.NOTE_CONTENT_URI, cv);
+                                            getContentResolver().insert(NoteStoreContentProvider.NOTE_CONTENT_URI, cv);
                                         }
 
                                         @Override

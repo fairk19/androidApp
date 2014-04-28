@@ -2,10 +2,10 @@
 <merger>
 
     <dataSet config="main" >
-        <source path="/home/vanik/TP/ThirdTerm/Mobile/projects/Evernote/projectFromGit/Evernote/library/src/main/assets" />
+        <source path="C:\androidApp\Evernote\library\src\main\assets" />
     </dataSet>
     <dataSet config="release" >
-        <source path="/home/vanik/TP/ThirdTerm/Mobile/projects/Evernote/projectFromGit/Evernote/library/src/release/assets" />
+        <source path="C:\androidApp\Evernote\library\src\release\assets" />
     </dataSet>
 
 </merger>
