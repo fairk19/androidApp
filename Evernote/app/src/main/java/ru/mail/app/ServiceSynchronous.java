@@ -133,8 +133,7 @@ public class ServiceSynchronous extends Service {
                                         @Override
                                         public void onSuccess(String content) {
                                             Log.d(LOG_TAG, content);
-                                            content = content.replace(EvernoteUtil.NOTE_PREFIX,"");
-                                            content = content.replace(EvernoteUtil.NOTE_SUFFIX, "");
+                                            content =  content.replaceAll("<.*?>", "");
                                             ContentValues cv = new ContentValues();
                                             cv.put(NoteStoreContentProvider.NOTE_GUID, note.getGuid());
                                             cv.put(NoteStoreContentProvider.NOTE_TITLE, note.getTitle());
