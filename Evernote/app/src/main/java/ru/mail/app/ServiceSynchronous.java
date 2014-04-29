@@ -132,6 +132,7 @@ public class ServiceSynchronous extends Service {
                                     mEvernoteSession.getClientFactory().createNoteStoreClient().getNoteContent(note.getGuid(),new OnClientCallback<String>() {
                                         @Override
                                         public void onSuccess(String content) {
+                                            String content_from_note = note.getContent();
                                             Log.d(LOG_TAG, content);
                                             content = content.replace(EvernoteUtil.NOTE_PREFIX,"");
                                             content = content.replace(EvernoteUtil.NOTE_SUFFIX, "");

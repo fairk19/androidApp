@@ -35,16 +35,20 @@ public class NoteShowingActivity extends Activity {
     }
     public void btnEditClick(View v) {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.remove(noteShowingFragment);
         noteEditFragment = new NoteEditFragment(intent);
-        ft.add(R.id.fragment, noteEditFragment);
+        ft.replace(R.id.fragment,noteEditFragment);
         ft.addToBackStack(null);
         ft.commit();
         Log.d(LOGTAG, "btnEdit was clicked");
     }
     public void btnSaveChangesClick(View v) {
+        FragmentManager fm = getFragmentManager();
+        fm.popBackStack();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.remove(noteEditFragment);
+//        ft.remove(noteEditFragment);
+
+        ft.replace(R.id.fragment, noteShowingFragment);
+//        ft.addToBackStack(null);
         ft.commit();
         EditText etTitle = (EditText) noteEditFragment.getView().findViewById(R.id.etTitle);
         EditText etContent = (EditText) noteEditFragment.getView().findViewById(R.id.etContent);
@@ -58,4 +62,6 @@ public class NoteShowingActivity extends Activity {
         Uri uri = Uri.parse(NoteStoreContentProvider.NOTE_CONTENT_URI+"/" +guid);
         getContentResolver().update(uri, cv, null, null);
     }
+
+
 }
