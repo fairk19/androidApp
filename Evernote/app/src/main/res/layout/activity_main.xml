@@ -16,45 +16,35 @@
         android:src="@drawable/img_login_logo"
         />
     <Button
+        style="@style/buttonClass"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
         android:text="@string/action_login"
-        android:textColor="#ffffff"
-        android:textSize="16dp"
         android:id="@+id/login"
         android:onClick="login"
-        android:background="@drawable/login_states_button"
-        android:layout_marginLeft="150dp"
+        android:layout_marginLeft="100dp"
         android:layout_marginRight="25dp"
         android:layout_marginTop="5dp"
         />
     <Button
+        style="@style/buttonClass"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
         android:text="@string/action_logout"
-        android:textColor="#ffffff"
-        android:textSize="16dp"
         android:id="@+id/logout"
         android:onClick="logout"
-        android:background="@drawable/login_states_button"
-        android:layout_marginLeft="150dp"
+        android:layout_marginLeft="100dp"
         android:layout_marginRight="25dp"
         android:layout_marginTop="50dp"
         />
 
     <Button
+        style="@style/buttonClass"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
         android:text="@string/btn_to_start_adding_note_activity"
-        android:textColor="#ffffff"
-        android:textSize="16dp"
         android:id="@+id/createNote"
         android:onClick="startNoteAddingActivity"
-        android:background="@drawable/login_states_button"
-        android:layout_marginLeft="150dp"
+        android:layout_marginLeft="100dp"
         android:layout_marginRight="25dp"
-        android:layout_marginTop="95dp"
-        />
+        android:layout_marginTop="95dp" />
 
 
     <ListView
