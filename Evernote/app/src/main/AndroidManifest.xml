@@ -29,7 +29,7 @@
         </activity>
 
         <service
-            android:name="ru.mail.app.ServiceSynchronous"
+            android:name=".ServiceSynchronization"
             android:enabled="true"
             android:exported="true" >
         </service>

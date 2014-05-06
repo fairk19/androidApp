@@ -1,6 +1,5 @@
 package ru.mail.app;
 
-import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Intent;
 import android.database.Cursor;
@@ -13,9 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-
-import com.evernote.client.android.EvernoteSession;
-
 
 public class MainActivity extends ParentActivity {
 
@@ -53,7 +49,7 @@ public class MainActivity extends ParentActivity {
     public void onResume() {
         super.onResume();
         updateAuthUi();
-        startService(new Intent(this, ServiceSynchronous.class));
+        startService(new Intent(this, ServiceSynchronization.class));
     }
 
     private void updateAuthUi() {
@@ -68,14 +64,17 @@ public class MainActivity extends ParentActivity {
         Cursor cursor = getContentResolver().query(NoteStoreContentProvider.NOTE_CONTENT_URI, null, null,
                 null, null);
 
-        int i = 0;
+        int count = 0;
         while (cursor.moveToNext()){
-            ++i;
-            Uri uri = ContentUris.withAppendedId(NoteStoreContentProvider.NOTE_CONTENT_URI, i);
-            getContentResolver().delete(uri, cursor.getString(0), null);
-            Log.d(LOGTAG, "delete id = " +  cursor.getString(0) + "\n");
+
+            ++count;
+            Uri uri = ContentUris.withAppendedId(NoteStoreContentProvider.NOTE_CONTENT_URI, Long.getLong(cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_ID))));
+            Log.d(LOGTAG, "deleted " + count + " count notes\n");
+            getContentResolver().delete(uri, cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_ID)), null);
+
+            Log.d(LOGTAG, "delete id = " +  Integer.getInteger(cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_ID))) + "\n");
         }
-        Log.d(LOGTAG, "deleted " + i + " count notes\n");
+        Log.d(LOGTAG, "deleted " + count + " count notes\n");
     }
 
     public void logout(View view) {

@@ -31,7 +31,7 @@ import com.evernote.thrift.transport.TTransportException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServiceSynchronous extends Service {
+public class ServiceSynchronization extends Service {
 
     final String LOG_TAG = "ServiceSynchronous";
     private static EvernoteSession mEvernoteSession;
@@ -61,7 +61,7 @@ public class ServiceSynchronous extends Service {
         }
     }
 
-    public ServiceSynchronous() {
+    public ServiceSynchronization() {
     }
 
     @Override
@@ -124,6 +124,7 @@ public class ServiceSynchronous extends Service {
                             //проверяем, есть ли в локальной базе запись с таким guid
                             Cursor cursor =  getContentResolver().query(NoteStoreContentProvider.NOTE_CONTENT_URI, null, "guid = ?", args, null );
                             if (!cursor.moveToFirst()) {
+
                                 //такой записи нет=> запись с сервера можно добавить в локальную базу
                                 Log.d(LOG_TAG, "Записи с guid  = " + noteGuid + " в локальной базе нет");
 

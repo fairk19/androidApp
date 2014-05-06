@@ -1,8 +1,6 @@
 package ru.mail.app;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
@@ -14,32 +12,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.evernote.client.android.ClientFactory;
-import com.evernote.client.android.EvernoteSession;
 import com.evernote.client.android.EvernoteUtil;
 import com.evernote.client.android.OnClientCallback;
-import com.evernote.client.oauth.EvernoteAuthToken;
-import com.evernote.edam.notestore.NoteStore;
 import com.evernote.edam.type.Note;
 import com.evernote.edam.type.Notebook;
 import com.evernote.thrift.transport.TTransportException;
 
 import java.util.List;
 
-/**
- * Created by vanik on 16.04.14.
- */
 public class NoteAddingActivity extends ParentActivity{
-
-
-    /**
-     * *************************************************************************
-     * The following values and code are simply part of the demo application.  *
-     * *************************************************************************
-     */
 
     private static final String LOGTAG = "SimpleNote";
 
@@ -77,25 +60,7 @@ public class NoteAddingActivity extends ParentActivity{
 
 
     }
-    public void showAllNotesClick(View v) {
-        if (v.getId() == R.id.btnShowAllNotes) {
-//            mEvernoteSession.getClientFactory().createNoteStoreClient().listNotebooks(new OnClientCallback<List<Notebook>>() {
-//                @Override
-//                public void onSuccess(List<Notebook> data) {
-//                    for ()
-//                }
-//
-//                @Override
-//                public void onException(Exception exception) {
-//
-//                }
-//            });
-        }
-    }
 
-    /**
-     * Saves text field content as note to selected notebook, or default notebook if no notebook select
-     */
     public void saveNote(View view) {
         String title = mEditTextTitle.getText().toString();
         String content = mEditTextContent.getText().toString();
@@ -144,9 +109,6 @@ public class NoteAddingActivity extends ParentActivity{
 
     }
 
-    /**
-     * Select notebook, create AlertDialog to pick notebook guid
-     */
     public void selectNotebook(View view) {
 
         try {
