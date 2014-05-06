@@ -15,22 +15,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <Button
+        style="@style/buttonClass"
         android:id="@+id/btnSend"
         android:text="@string/btn_send"
         android:onClick="saveNote"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <Button
+        style="@style/buttonClass"
         android:id="@+id/btnSelectNotebook"
         android:text="@string/btn_select_notebook"
         android:onClick="selectNotebook"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <Button
+        style="@style/buttonClass"
         android:id="@+id/btnShowAllNotes"
         android:text="@string/btn_show_all_notes"
         android:onClick="showAllNotesClick"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
     <ListView
