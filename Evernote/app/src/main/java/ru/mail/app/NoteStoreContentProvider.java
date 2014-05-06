@@ -119,12 +119,11 @@ public class NoteStoreContentProvider extends ContentProvider {
 
     public Uri insert(Uri uri, ContentValues contentValues) {
         Log.d(LOG_TAG, "insert");
-        if (uriMatcher.match(uri) != URI_NOTES_ID && uriMatcher.match(uri) != URI_NOTES)
-            throw new IllegalArgumentException("Wrong URI: " + uri);
 
         String tableName = uri.getPath().substring(1, uri.getPath().length());
         db = dbHelper.getWritableDatabase();
         long rowID = db.insert(tableName, null, contentValues);
+        Log.d(LOG_TAG, "ROWID" + rowID);
         Uri resultUri = ContentUris.withAppendedId(uri, rowID);
 
         // уведомляем ContentResolver, что данные по адресу resultUri изменились
@@ -136,12 +135,13 @@ public class NoteStoreContentProvider extends ContentProvider {
 
         Log.d(LOG_TAG, "delete, " + uri.toString());
         String id = uri.getLastPathSegment();
-        Log.d(LOG_TAG, "URI_NOTES_ID, " + id);
+
         if (TextUtils.isEmpty(selection)) {
             selection = NOTE_ID + " = " + id;
         } else {
             selection = selection + " AND " + NOTE_ID + " = " + id;
         }
+
         db = dbHelper.getWritableDatabase();
         int cnt = db.delete(NOTE_TABLE, selection, selectionArgs);
 
@@ -160,7 +160,7 @@ public class NoteStoreContentProvider extends ContentProvider {
             } else {
                 selection = selection + " and " + NOTE_GUID + " = " + id;
             }
-            int cnt = db.update(NOTE_TABLE, values, selection, selectionArgs);
+            db.update(NOTE_TABLE, values, selection, selectionArgs);
             getContext().getContentResolver().notifyChange(uri, null);
         }
         return 0;

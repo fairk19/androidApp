@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
+import com.evernote.client.android.InvalidAuthenticationException;
+
 public class MainActivity extends ParentActivity {
 
     private static final String LOGTAG = "MainActivity";
@@ -64,12 +66,12 @@ public class MainActivity extends ParentActivity {
         Cursor cursor = getContentResolver().query(NoteStoreContentProvider.NOTE_CONTENT_URI, null, null,
                 null, null);
 
-        int count = 0;
+        long count = 0;
         while (cursor.moveToNext()){
 
             ++count;
-            Uri uri = ContentUris.withAppendedId(NoteStoreContentProvider.NOTE_CONTENT_URI, Long.getLong(cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_ID))));
-            Log.d(LOGTAG, "deleted " + count + " count notes\n");
+            Uri uri = ContentUris.withAppendedId(NoteStoreContentProvider.NOTE_CONTENT_URI, Long.parseLong(cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_ID))));
+            Log.e(LOGTAG, "URI " + uri);
             getContentResolver().delete(uri, cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_ID)), null);
 
             Log.d(LOGTAG, "delete id = " +  Integer.getInteger(cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_ID))) + "\n");
@@ -78,12 +80,12 @@ public class MainActivity extends ParentActivity {
     }
 
     public void logout(View view) {
-//        try {
+        try {
               deleteAllNotesFromDB();
-//            mEvernoteSession.logOut(this);
-//        } catch (InvalidAuthenticationException e) {
-//            Log.e(LOGTAG, "Tried to call logout with not logged in", e);
-//        }
+              mEvernoteSession.logOut(this);
+        } catch (InvalidAuthenticationException e) {
+            Log.e(LOGTAG, "Tried to call logout with not logged in", e);
+        }
         updateAuthUi();
     }
 
