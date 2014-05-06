@@ -21,7 +21,10 @@
     <string name="btn_select_notebook">Выбрать блокнот</string>
     <string name="btn_show_all_notes">Показать все блокноты</string>
     <string name="empty_content_error">Заголовок или содержание не может быть пустым</string>
-    <string name="note_saved">Заметка добавленна</string>
+    <string name="success_saving_note">Заметка добавленна</string>
     <string name="error_saving_note">Ошибка при создании заметки</string>
+
+    <string name="error_sync_with_server">Не удалось соедениться ссервером</string>
+    <string name="success_sync_with_server">Все изменения сохранены на сервер</string>
 
 </resources>

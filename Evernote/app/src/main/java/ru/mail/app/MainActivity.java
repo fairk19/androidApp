@@ -17,7 +17,7 @@ import com.evernote.client.android.InvalidAuthenticationException;
 
 public class MainActivity extends ParentActivity {
 
-    private static final String LOGTAG = "MainActivity";
+    private static final String LOG_TAG = "MainActivity";
 
     private Button mLoginButton;
     private Button mLogoutButton;
@@ -71,12 +71,12 @@ public class MainActivity extends ParentActivity {
 
             ++count;
             Uri uri = ContentUris.withAppendedId(NoteStoreContentProvider.NOTE_CONTENT_URI, Long.parseLong(cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_ID))));
-            Log.e(LOGTAG, "URI " + uri);
+            Log.e(LOG_TAG, "URI " + uri);
             getContentResolver().delete(uri, cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_ID)), null);
 
-            Log.d(LOGTAG, "delete id = " +  Integer.getInteger(cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_ID))) + "\n");
+            Log.d(LOG_TAG, "delete id = " +  Integer.getInteger(cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_ID))) + "\n");
         }
-        Log.d(LOGTAG, "deleted " + count + " count notes\n");
+        Log.d(LOG_TAG, "deleted " + count + " count notes\n");
     }
 
     public void logout(View view) {
@@ -84,7 +84,7 @@ public class MainActivity extends ParentActivity {
               deleteAllNotesFromDB();
               mEvernoteSession.logOut(this);
         } catch (InvalidAuthenticationException e) {
-            Log.e(LOGTAG, "Tried to call logout with not logged in", e);
+            Log.e(LOG_TAG, "Tried to call logout with not logged in", e);
         }
         updateAuthUi();
     }
