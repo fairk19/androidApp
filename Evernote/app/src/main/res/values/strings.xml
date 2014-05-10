@@ -8,10 +8,8 @@
     <string name="title_activity_login">Авторизация</string>
     <string name="error_creating_notestore">Ошибка синхронизации</string>
     <string name="success_creating_notestore">Синхронизация прошла успешно</string>
-
     <string name="ok">OK</string>
     <string name="error_listing_notebooks">Error listing notebooks</string>
-
     <string name="btn_save_changes">Сохранить изменения</string>
     <string name="btn_edit_note">Редактировать</string>
     <string name="btn_to_start_adding_note_activity">Создать заметку</string>
@@ -24,8 +22,9 @@
     <string name="empty_content_error">Заголовок или содержание не может быть пустым</string>
     <string name="success_saving_note">Заметка добавленна</string>
     <string name="error_saving_note">Ошибка при создании заметки</string>
-
     <string name="error_sync_with_server">Не удалось соедениться ссервером</string>
     <string name="success_sync_with_server">Все изменения сохранены на сервер</string>
+    <string name="title_activity_notes_list">NotesListActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
