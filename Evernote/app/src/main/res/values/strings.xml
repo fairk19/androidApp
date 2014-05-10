@@ -15,9 +15,10 @@
     <string name="btn_save_changes">Сохранить изменения</string>
     <string name="btn_edit_note">Редактировать</string>
     <string name="btn_to_start_adding_note_activity">Создать заметку</string>
-    <string name="note_title">Заголовок</string>
-    <string name="note_body">Тело заметки</string>
+    <string name="note_title">Введите заголовок...</string>
+    <string name="note_body">... а сюда -- заметку</string>
     <string name="btn_send">Сохранить</string>
+    <string name="btn_cancel">Отменить</string>
     <string name="btn_select_notebook">Выбрать блокнот</string>
     <string name="btn_show_all_notes">Показать все блокноты</string>
     <string name="empty_content_error">Заголовок или содержание не может быть пустым</string>

@@ -1,5 +1,6 @@
 package ru.mail.app;
 
+import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 import com.evernote.client.android.InvalidAuthenticationException;
 
@@ -22,6 +24,8 @@ public class MainActivity extends ParentActivity {
     private Button mLoginButton;
     private Button mLogoutButton;
     private Button mCreateNoteButton;
+    private TextView forgetPasswordText;
+
     private ListView lvNotes;
     private SimpleCursorAdapter scAdapter;
 
@@ -34,6 +38,7 @@ public class MainActivity extends ParentActivity {
         mLogoutButton = (Button) findViewById(R.id.logout);
         mCreateNoteButton = (Button) findViewById(R.id.createNote);
 
+
         final Cursor cursor = getContentResolver().query(NoteStoreContentProvider.NOTE_CONTENT_URI, null, null,
                 null, null);
 
@@ -45,7 +50,27 @@ public class MainActivity extends ParentActivity {
         lvNotes = (ListView) findViewById(R.id.noteList);
         lvNotes.setAdapter(scAdapter);
         lvNotes.setOnItemClickListener(new ItemClickListener(this, cursor));
+
+        findViewById(R.id.forgetPasswordButton).setOnClickListener(new OnLinkClick("http://turboportal.ru/uploads/posts/2013-06/1371597913_ebat-ty-loh.jpg"));
+        findViewById(R.id.notRegisteredYetButton).setOnClickListener(new OnLinkClick("https://sandbox.evernote.com/Registration.action"));
+
     }
+
+    private class OnLinkClick implements View.OnClickListener {
+
+        private String link;
+
+        OnLinkClick(String link) {
+            this.link = link;
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+            startActivity(intent);
+        }
+    }
+
 
     @Override
     public void onResume() {
@@ -117,4 +142,5 @@ public class MainActivity extends ParentActivity {
         Intent intent = new Intent(this, NoteAddingActivity.class);
         startActivity(intent);
     }
+
 }
