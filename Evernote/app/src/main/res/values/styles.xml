@@ -8,11 +8,24 @@
     <style name="buttonClass" parent="android:Theme">
         <item name="android:textColor">#ffffff</item>
         <item name="android:background">@drawable/login_states_button</item>
-        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:textSize">16dp</item>
         <item name="android:layout_marginTop">1pt</item>
         <item name="android:layout_marginBottom">1pt</item>
+        <item name="android:layout_marginLeft">25pt</item>
+        <item name="android:layout_marginRight">25pt</item>
+    </style>
+
+    <style name="buttonClass2" parent="android:Theme">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:layout_marginRight">6dp</item>
+        <item name="android:layout_marginLeft">6dp</item>
+        <item name="android:layout_marginTop">6dp</item>
+        <item name="android:layout_marginBottom">6dp</item>
     </style>
 
 </resources>
