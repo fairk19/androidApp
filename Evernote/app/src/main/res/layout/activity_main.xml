@@ -76,6 +76,7 @@
 
         <TextView
             style="@style/buttonClass2"
+            android:id="@+id/notRegisteredYetButton"
             android:layout_width="190dp"
             android:layout_height="wrap_content"
             android:text="Еще не зарегистрирован?"
@@ -86,6 +87,7 @@
 
         <TextView
             style="@style/buttonClass2"
+            android:id="@+id/forgetPasswordButton"
             android:layout_width="190dp"
             android:layout_height="wrap_content"
             android:text="Забыл пароль, лошара?"

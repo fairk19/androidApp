@@ -28,4 +28,10 @@
         <item name="android:layout_marginBottom">6dp</item>
     </style>
 
+    <style name="buttonClassTop">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">#2dbe60</item>
+        <item name="android:background">#00000000</item>
+    </style>
+
 </resources>
