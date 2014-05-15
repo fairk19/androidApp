@@ -71,7 +71,6 @@ public class MainActivity extends ParentActivity {
 
             ++count;
             Uri uri = ContentUris.withAppendedId(NoteStoreContentProvider.NOTE_CONTENT_URI, Long.parseLong(cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_ID))));
-            Log.e(LOG_TAG, "URI " + uri);
             getContentResolver().delete(uri, cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_ID)), null);
 
             Log.d(LOG_TAG, "delete id = " +  Integer.getInteger(cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_ID))) + "\n");

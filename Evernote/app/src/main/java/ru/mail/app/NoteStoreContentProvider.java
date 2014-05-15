@@ -152,6 +152,7 @@ public class NoteStoreContentProvider extends ContentProvider {
 
     public int update(Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
+
         if(uriMatcher.match(uri) != URI_NOTES_ID) {
             db = dbHelper.getWritableDatabase();
             String id = uri.getLastPathSegment();

@@ -48,14 +48,14 @@ public class NoteShowingActivity extends Activity {
         ft.commit();
         EditText etTitle = (EditText) noteEditFragment.getView().findViewById(R.id.etTitle);
         EditText etContent = (EditText) noteEditFragment.getView().findViewById(R.id.etContent);
-        String guid = intent.getStringExtra("_id");
+        String _id = intent.getStringExtra("_id");
         String title = etTitle.getText().toString();
         String content = etContent.getText().toString();
         ContentValues cv = new ContentValues();
-        cv.put(NoteStoreContentProvider.NOTE_GUID, guid);
+        cv.put(NoteStoreContentProvider.NOTE_ID, _id);
         cv.put(NoteStoreContentProvider.NOTE_TITLE, title);
         cv.put(NoteStoreContentProvider.NOTE_CONTENT, content);
-        Uri uri = Uri.parse(NoteStoreContentProvider.NOTE_CONTENT_URI+"/" +guid);
+        Uri uri = Uri.parse(NoteStoreContentProvider.NOTE_CONTENT_URI + "/" + _id);
         getContentResolver().update(uri, cv, null, null);
     }
 }

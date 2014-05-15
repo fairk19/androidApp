@@ -1,9 +1,11 @@
 package ru.mail.app;
 
 import android.app.Service;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.IBinder;
 import android.text.TextUtils;
 import android.util.Log;
@@ -31,6 +33,7 @@ public class ServiceSynchronization extends Service {
     final String LOG_TAG = "ServiceSynchronous";
     private static EvernoteSession mEvernoteSession;
     private String mSelectedNotebookGuid;
+    private Cursor cursor;
 
     public void listNotebooks() throws TTransportException {
         if (mEvernoteSession.isLoggedIn()) {
@@ -177,12 +180,16 @@ public class ServiceSynchronization extends Service {
 
     public void addNewNodesToServer(){
 
-        Cursor cursor = getContentResolver().query(NoteStoreContentProvider.NOTE_CONTENT_URI, null, null,
+        cursor = getContentResolver().query(NoteStoreContentProvider.NOTE_CONTENT_URI, null, null,
                 null, null);
 
         while (cursor.moveToNext()) {
 
+            Log.e(LOG_TAG, "NOTE NEW " + cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_NEW)));
+            Log.e(LOG_TAG, "NOTE TITLE " + cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_TITLE)));
+
             if (cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_NEW)).equals("1")) {
+
                 String title = cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_TITLE));
                 String content = cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_CONTENT));
 
@@ -200,8 +207,14 @@ public class ServiceSynchronization extends Service {
                     mEvernoteSession.getClientFactory().createNoteStoreClient().createNote(note, new OnClientCallback<Note>() {
                         @Override
                         public void onSuccess(Note data) {
-                            Toast.makeText(getApplicationContext(), R.string.success_sync_with_server, Toast.LENGTH_LONG).show();
 
+                            // удаляем флаг new с заметки
+                            Uri uri = ContentUris.withAppendedId(NoteStoreContentProvider.NOTE_CONTENT_URI, Long.parseLong(cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_ID))));
+                            Log.e(LOG_TAG, "URI NEW NOTE " + uri);
+                            getContentResolver().delete(uri, cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_ID)), null);
+
+                            // сообщение пользователю о успешном сохранение заметки на сервер
+                            Toast.makeText(getApplicationContext(), R.string.success_sync_with_server, Toast.LENGTH_LONG).show();
                         }
 
                         @Override
