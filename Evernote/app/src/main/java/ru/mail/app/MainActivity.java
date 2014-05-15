@@ -51,26 +51,7 @@ public class MainActivity extends ParentActivity {
         lvNotes.setAdapter(scAdapter);
         lvNotes.setOnItemClickListener(new ItemClickListener(this, cursor));
 
-        findViewById(R.id.forgetPasswordButton).setOnClickListener(new OnLinkClick("http://turboportal.ru/uploads/posts/2013-06/1371597913_ebat-ty-loh.jpg"));
-        findViewById(R.id.notRegisteredYetButton).setOnClickListener(new OnLinkClick("https://sandbox.evernote.com/Registration.action"));
-
     }
-
-    private class OnLinkClick implements View.OnClickListener {
-
-        private String link;
-
-        OnLinkClick(String link) {
-            this.link = link;
-        }
-
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
-            startActivity(intent);
-        }
-    }
-
 
     @Override
     public void onResume() {

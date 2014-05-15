@@ -10,15 +10,6 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/elephantIcon"
-        android:src="@drawable/img_login_logo"
-        android:layout_marginTop="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
     <Button
         style="@style/buttonClass"
         android:text="@string/action_login"
@@ -33,7 +24,8 @@
         android:id="@+id/createNote"
         android:onClick="startNoteAddingActivity"
         android:layout_above="@+id/logout"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        />
 
     <Button
         style="@style/buttonClass"
@@ -41,62 +33,18 @@
         android:text="@string/action_logout"
         android:id="@+id/logout"
         android:onClick="logout"
-        android:layout_above="@+id/bottomPanel" />
+        android:layout_alignParentBottom="true"
+        />
 
 
     <ListView
-        android:layout_height="30pt"
+        android:layout_alignParentTop="true"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:id="@+id/noteList"
         android:layout_above="@id/login"
         android:layout_below="@id/textView"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16pt"
-        android:text="Remember\nEverything"
-        android:textColor="#FFFFFF"
-        android:id="@+id/textView"
-        android:layout_below="@+id/elephantIcon"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentStart="false"
-        android:layout_alignParentEnd="false"
-        android:gravity="center"
-        />
-
-    <LinearLayout
-        android:id="@+id/bottomPanel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        >
-
-        <TextView
-            style="@style/buttonClass2"
-            android:id="@+id/notRegisteredYetButton"
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
-            android:text="Еще не зарегистрирован?"
-            android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/textView"
-
-            />
-
-        <TextView
-            style="@style/buttonClass2"
-            android:id="@+id/forgetPasswordButton"
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
-            android:text="Забыл пароль, лошара?"
-            android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/textView"
-            android:layout_gravity="center_vertical"
-            />
-
-    </LinearLayout>
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>
 
