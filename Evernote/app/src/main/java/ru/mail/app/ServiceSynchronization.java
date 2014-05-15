@@ -185,15 +185,16 @@ public class ServiceSynchronization extends Service {
 
         while (cursor.moveToNext()) {
 
-            Log.e(LOG_TAG, "NOTE NEW " + cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_NEW)));
-            Log.e(LOG_TAG, "NOTE TITLE " + cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_TITLE)));
-
             if (cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_NEW)).equals("1")) {
+
+                Log.e(LOG_TAG, "BEFORE IF NOTE NEW " + cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_NEW)));
+                Log.e(LOG_TAG, "BEFORE IF NOTE TITLE " + cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_TITLE)));
 
                 String title = cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_TITLE));
                 String content = cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_CONTENT));
+                final Long noteID = Long.parseLong(cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_ID)));
 
-                Note note = new Note();
+                final Note note = new Note();
                 note.setTitle(title);
 
                 //TODO: line breaks need to be converted to render in ENML
@@ -204,13 +205,13 @@ public class ServiceSynchronization extends Service {
                 }
 
                 try {
+
                     mEvernoteSession.getClientFactory().createNoteStoreClient().createNote(note, new OnClientCallback<Note>() {
                         @Override
                         public void onSuccess(Note data) {
 
                             // удаляем флаг new с заметки
-                            Uri uri = ContentUris.withAppendedId(NoteStoreContentProvider.NOTE_CONTENT_URI, Long.parseLong(cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_ID))));
-                            Log.e(LOG_TAG, "URI NEW NOTE " + uri);
+                            Uri uri = ContentUris.withAppendedId(NoteStoreContentProvider.NOTE_CONTENT_URI, noteID);
                             getContentResolver().delete(uri, cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_ID)), null);
 
                             // сообщение пользователю о успешном сохранение заметки на сервер
