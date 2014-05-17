@@ -22,7 +22,8 @@
             android:name="com.evernote.client.android.EvernoteOAuthActivity"
             android:configChanges="orientation|keyboardHidden" />
 
-        <activity android:name="ru.mail.app.NoteAddingActivity">
+        <activity android:name="ru.mail.app.NoteAddingActivity"
+            android:windowSoftInputMode="">
         </activity>
 
         <activity android:name="ru.mail.app.NoteShowingActivity">

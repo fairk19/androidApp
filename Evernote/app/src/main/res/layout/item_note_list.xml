@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="200dp"
@@ -9,25 +9,50 @@
     android:layout_margin="4dp">
 
     <TextView
-        android:visibility="invisible"
+        android:id="@+id/time"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="24:61"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:textColor="@color/main_green_color"
+        />
 
+    <TextView
+        android:visibility="invisible"
         android:id="@+id/guid"
         android:textSize="12dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="opop"
         />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="top" />
+        android:hint="Заголовок"
+        android:layout_below="@+id/time"
+        />
+
     <TextView
         android:id="@+id/content"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="Джигурда" />
+        android:hint="Контент"
+        android:textColor="@color/main_grey_color"
+        android:layout_below="@+id/title"
+        />
+
+    <TextView
+        android:id="@+id/remind_date"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="22 мая"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:textColor="@color/main_green_color"
+        android:drawableStart="@drawable/ic_reminders_drawer_list_reminder"
+        />
 
 
-</LinearLayout>
+</RelativeLayout>

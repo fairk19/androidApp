@@ -25,9 +25,7 @@ public class MainActivity extends ParentActivity {
     private Button mLoginButton;
     private Button mLogoutButton;
     private Button mCreateNoteButton;
-    private TextView forgetPasswordText;
 
-    private ListView lvNotes;
     private GridView gridView;
     private SimpleCursorAdapter scAdapter;
 
@@ -48,6 +46,7 @@ public class MainActivity extends ParentActivity {
         int[] to = new int[]{ R.id.guid, R.id.title, R.id.content };
         scAdapter = new SimpleCursorAdapter(this,
                 R.layout.item_note_list, cursor, from, to);
+
 
         gridView = (GridView) findViewById(R.id.gridView);
         gridView.setAdapter(scAdapter);
