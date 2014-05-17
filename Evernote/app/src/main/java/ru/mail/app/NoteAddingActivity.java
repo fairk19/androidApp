@@ -43,7 +43,7 @@ public class NoteAddingActivity extends ParentActivity{
         Cursor cursor = getContentResolver().query(NOTE_URI, null, null,
                 null, null);
         String[] from = new String[] {NOTE_GUID, NOTE_TITLE, NOTE_CONTENT };
-        int[] to = new int[]{ R.id.guid, R.id.title, R.id.content };
+        int[] to = new int[]{ R.id.title, R.id.content };
         scAdapter = new SimpleCursorAdapter(this,
                 R.layout.item_note_list, cursor, from, to);
         lvAllNotes = (ListView) findViewById(R.id.lvAllNotes);

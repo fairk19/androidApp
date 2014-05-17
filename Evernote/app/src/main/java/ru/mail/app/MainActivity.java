@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -24,9 +25,8 @@ public class MainActivity extends ParentActivity {
     private Button mLoginButton;
     private Button mLogoutButton;
     private Button mCreateNoteButton;
-    private TextView forgetPasswordText;
 
-    private ListView lvNotes;
+    private GridView gridView;
     private SimpleCursorAdapter scAdapter;
 
     @Override
@@ -47,9 +47,10 @@ public class MainActivity extends ParentActivity {
         scAdapter = new SimpleCursorAdapter(this,
                 R.layout.item_note_list, cursor, from, to);
 
-        lvNotes = (ListView) findViewById(R.id.noteList);
-        lvNotes.setAdapter(scAdapter);
-        lvNotes.setOnItemClickListener(new ItemClickListener(this, cursor));
+
+        gridView = (GridView) findViewById(R.id.gridView);
+        gridView.setAdapter(scAdapter);
+        gridView.setOnItemClickListener(new ItemClickListener(this, cursor));
 
     }
 
