@@ -1,5 +1,6 @@
 package ru.mail.app;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.evernote.client.android.InvalidAuthenticationException;
 
@@ -22,9 +24,6 @@ public class MainActivity extends ParentActivity {
 
     private static final String LOG_TAG = "MainActivity";
 
-    private Button mLoginButton;
-    private Button mLogoutButton;
-    private Button mCreateNoteButton;
 
     private GridView gridView;
     private SimpleCursorAdapter scAdapter;
@@ -34,9 +33,7 @@ public class MainActivity extends ParentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mLoginButton = (Button) findViewById(R.id.login);
-        mLogoutButton = (Button) findViewById(R.id.logout);
-        mCreateNoteButton = (Button) findViewById(R.id.createNote);
+        ActionBar actionBar = getActionBar();
 
 
         final Cursor cursor = getContentResolver().query(NoteStoreContentProvider.NOTE_CONTENT_URI, null, null,
@@ -63,9 +60,6 @@ public class MainActivity extends ParentActivity {
 
     private void updateAuthUi() {
 
-        mLoginButton.setEnabled(!mEvernoteSession.isLoggedIn());
-        mLogoutButton.setEnabled(mEvernoteSession.isLoggedIn());
-        mCreateNoteButton.setEnabled(mEvernoteSession.isLoggedIn());
     }
 
     private void deleteAllNotesFromDB(){
@@ -97,9 +91,11 @@ public class MainActivity extends ParentActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        //mEvernoteSession.isLoggedIn() -- надо запомнить этот метод
+//        menu.getItem(R.id.action_login).setVisible(!mEvernoteSession.isLoggedIn());
+//        menu.getItem(R.id.action_logout).setVisible(mEvernoteSession.isLoggedIn());
         return true;
     }
 
@@ -109,9 +105,17 @@ public class MainActivity extends ParentActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+
+        switch (id) {
+            case R.id.action_settings:
+                return true;
+            case R.id.action_logout:
+                logout(null);
+                return true;
+            case R.id.action_login:
+                login(null);
         }
+
         return super.onOptionsItemSelected(item);
     }
 
