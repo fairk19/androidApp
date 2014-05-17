@@ -8,11 +8,13 @@
     android:layout_width="match_parent">
 
     <TextView
+        android:textSize="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/create_new_note"
         android:id="@+id/createNewNoteTextView"
-        android:padding="10dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
         />
 
 
@@ -36,6 +38,7 @@
                 android:src="@drawable/ic_list_add_text"
                 android:layout_width="@dimen/diameter"
                 android:layout_height="@dimen/diameter"
+                android:onClick="startNoteAddingActivity"
                 android:id="@+id/textNoteAdd"/>
             <TextView
                 style="@style/panel_add_text"
@@ -131,36 +134,12 @@
 
     </LinearLayout>
 
-    <Button
-        style="@style/buttonClass"
-        android:text="@string/action_login"
-        android:id="@+id/login"
-        android:onClick="login"
-        android:layout_above="@+id/createNote"/>
-
-    <Button
-        style="@style/buttonClass"
-        android:layout_width="match_parent"
-        android:text="@string/btn_to_start_adding_note_activity"
-        android:id="@+id/createNote"
-        android:onClick="startNoteAddingActivity"
-        android:layout_above="@+id/logout"
-        android:layout_centerHorizontal="true"
-        />
-
-    <Button
-        style="@style/buttonClass"
-        android:layout_width="match_parent"
-        android:text="@string/action_logout"
-        android:id="@+id/logout"
-        android:onClick="logout"
-        android:layout_alignParentBottom="true"
-        />
 
 
     <GridView
         android:layout_width="wrap_content"
-        android:padding="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:numColumns="2"
         android:id="@+id/gridView"
         android:layout_below="@+id/buttonPanel"
