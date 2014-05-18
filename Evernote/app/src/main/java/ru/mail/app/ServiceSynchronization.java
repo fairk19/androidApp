@@ -26,6 +26,7 @@ import com.evernote.edam.type.Note;
 import com.evernote.thrift.transport.TTransportException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ServiceSynchronization extends Service {
@@ -131,6 +132,8 @@ public class ServiceSynchronization extends Service {
                                         public void onSuccess(String content) {
                                             Long createdTime = note.getCreated();
                                             Long updatedTime = note.getUpdated();
+                                            Date date = new Date(note.getCreated());
+                                            String crTime = date.toString();
                                             String notebookGuid = note.getNotebookGuid();
                                             content =  content.replaceAll("<.*?>", "");
                                             Log.d(LOG_TAG, content);
