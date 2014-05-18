@@ -49,13 +49,6 @@ public class NoteShowingActivity extends Activity {
         ft.replace(R.id.fragment, noteEditFragment);
         ft.addToBackStack(null);
         ft.commit();
-
-        //выходим наглавное окно
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-
-        //сообщаем пользователю об успешном изменении заметки
-        Toast.makeText(getApplicationContext(), R.string.success_editing_note, Toast.LENGTH_LONG).show();
     }
 
     public void btnDeleteClick(View v) {
@@ -94,7 +87,12 @@ public class NoteShowingActivity extends Activity {
         cv.put(NoteStoreContentProvider.NOTE_UPDATE, true);
         Uri uri = Uri.parse(NoteStoreContentProvider.NOTE_CONTENT_URI+"/" +_id);
         getContentResolver().update(uri, cv, null, null);
+
+        //выходим наглавное окно
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+
+        //сообщаем пользователю об успешном изменении заметки
+        Toast.makeText(getApplicationContext(), R.string.success_editing_note, Toast.LENGTH_LONG).show();
     }
-
-
 }
