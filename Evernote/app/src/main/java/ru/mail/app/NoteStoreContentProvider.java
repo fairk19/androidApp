@@ -105,6 +105,15 @@ public class NoteStoreContentProvider extends ContentProvider {
                     sortOrder = NOTE_GUID + " ASC";
                 }
                 break;
+            case URI_NOTES_ID:
+                String id = uri.getLastPathSegment();
+                Log.d(LOG_TAG, "id of note = " + id);
+                if (TextUtils.isEmpty(selection)) {
+                    selection = NoteStoreContentProvider.NOTE_ID + " = " + id;
+                } else {
+                    selection = selection + " AND " + NoteStoreContentProvider.NOTE_ID + " = " + id;
+                }
+                break;
             default:
                 throw new IllegalArgumentException("Wrong URI: " + uri + "\n" + uriMatcher.match(uri));
         }
@@ -152,13 +161,13 @@ public class NoteStoreContentProvider extends ContentProvider {
 
     public int update(Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
-        if(uriMatcher.match(uri) != URI_NOTES_ID) {
+        if(uriMatcher.match(uri) == URI_NOTES_ID) {
             db = dbHelper.getWritableDatabase();
             String id = uri.getLastPathSegment();
             if (TextUtils.isEmpty(selection)){
-                selection = NOTE_GUID + " = \"" + id + "\"";
+                selection = NOTE_ID + " = \"" + id + "\"";
             } else {
-                selection = selection + " and " + NOTE_GUID + " = " + id;
+                selection = selection + " and " + NOTE_ID + " = " + id;
             }
             int cnt = db.update(NOTE_TABLE, values, selection, selectionArgs);
             getContext().getContentResolver().notifyChange(uri, null);
