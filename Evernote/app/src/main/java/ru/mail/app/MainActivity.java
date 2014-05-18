@@ -26,6 +26,10 @@ public class MainActivity extends ParentActivity {
     private static final String LOG_TAG = "MainActivity";
 
 
+    private Button mLoginButton;
+    private Button mLogoutButton;
+    private Button mCreateNoteButton;
+
     private GridView gridView;
     private SimpleCursorAdapter scAdapter;
 
@@ -80,12 +84,12 @@ public class MainActivity extends ParentActivity {
     }
 
     public void logout(View view) {
-        try {
+//        try {
               deleteAllNotesFromDB();
-              mEvernoteSession.logOut(this);
-        } catch (InvalidAuthenticationException e) {
-            Log.e(LOG_TAG, "Tried to call logout with not logged in", e);
-        }
+//              mEvernoteSession.logOut(this);
+//        } catch (InvalidAuthenticationException e) {
+//            Log.e(LOG_TAG, "Tried to call logout with not logged in", e);
+//        }
         updateAuthUi();
     }
 
