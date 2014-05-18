@@ -1,5 +1,6 @@
 package ru.mail.app;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Intent;
@@ -11,20 +12,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.evernote.client.android.EvernoteSession;
-
+import com.evernote.client.android.InvalidAuthenticationException;
 
 public class MainActivity extends ParentActivity {
 
-    private static final String LOGTAG = "MainActivity";
+    private static final String LOG_TAG = "MainActivity";
 
-    private Button mLoginButton;
-    private Button mLogoutButton;
-    private Button mCreateNoteButton;
-    private ListView lvNotes;
+
+    private GridView gridView;
     private SimpleCursorAdapter scAdapter;
 
     @Override
@@ -32,9 +33,8 @@ public class MainActivity extends ParentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mLoginButton = (Button) findViewById(R.id.login);
-        mLogoutButton = (Button) findViewById(R.id.logout);
-        mCreateNoteButton = (Button) findViewById(R.id.createNote);
+        ActionBar actionBar = getActionBar();
+
 
         final Cursor cursor = getContentResolver().query(NoteStoreContentProvider.NOTE_CONTENT_URI, null, null,
                 null, null);
@@ -44,23 +44,22 @@ public class MainActivity extends ParentActivity {
         scAdapter = new SimpleCursorAdapter(this,
                 R.layout.item_note_list, cursor, from, to);
 
-        lvNotes = (ListView) findViewById(R.id.noteList);
-        lvNotes.setAdapter(scAdapter);
-        lvNotes.setOnItemClickListener(new ItemClickListener(this, cursor));
+
+        gridView = (GridView) findViewById(R.id.gridView);
+        gridView.setAdapter(scAdapter);
+        gridView.setOnItemClickListener(new ItemClickListener(this, cursor));
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
         updateAuthUi();
-        startService(new Intent(this, ServiceSynchronous.class));
+        startService(new Intent(this, ServiceSynchronization.class));
     }
 
     private void updateAuthUi() {
 
-        mLoginButton.setEnabled(!mEvernoteSession.isLoggedIn());
-        mLogoutButton.setEnabled(mEvernoteSession.isLoggedIn());
-        mCreateNoteButton.setEnabled(mEvernoteSession.isLoggedIn());
     }
 
     private void deleteAllNotesFromDB(){
@@ -68,31 +67,35 @@ public class MainActivity extends ParentActivity {
         Cursor cursor = getContentResolver().query(NoteStoreContentProvider.NOTE_CONTENT_URI, null, null,
                 null, null);
 
-        int i = 0;
+        long count = 0;
         while (cursor.moveToNext()){
-            ++i;
-            Uri uri = ContentUris.withAppendedId(NoteStoreContentProvider.NOTE_CONTENT_URI, i);
-            getContentResolver().delete(uri, cursor.getString(0), null);
-            Log.d(LOGTAG, "delete id = " +  cursor.getString(0) + "\n");
+
+            ++count;
+            Uri uri = ContentUris.withAppendedId(NoteStoreContentProvider.NOTE_CONTENT_URI, Long.parseLong(cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_ID))));
+            getContentResolver().delete(uri, cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_ID)), null);
+
+            Log.d(LOG_TAG, "delete id = " +  Integer.getInteger(cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_ID))) + "\n");
         }
-        Log.d(LOGTAG, "deleted " + i + " count notes\n");
+        Log.d(LOG_TAG, "deleted " + count + " count notes\n");
     }
 
     public void logout(View view) {
-//        try {
+        try {
               deleteAllNotesFromDB();
-//            mEvernoteSession.logOut(this);
-//        } catch (InvalidAuthenticationException e) {
-//            Log.e(LOGTAG, "Tried to call logout with not logged in", e);
-//        }
+              mEvernoteSession.logOut(this);
+        } catch (InvalidAuthenticationException e) {
+            Log.e(LOG_TAG, "Tried to call logout with not logged in", e);
+        }
         updateAuthUi();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        //mEvernoteSession.isLoggedIn() -- надо запомнить этот метод
+//        menu.getItem(R.id.action_login).setVisible(!mEvernoteSession.isLoggedIn());
+//        menu.getItem(R.id.action_logout).setVisible(mEvernoteSession.isLoggedIn());
         return true;
     }
 
@@ -102,9 +105,17 @@ public class MainActivity extends ParentActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+
+        switch (id) {
+            case R.id.action_settings:
+                return true;
+            case R.id.action_logout:
+                logout(null);
+                return true;
+            case R.id.action_login:
+                login(null);
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -116,4 +127,5 @@ public class MainActivity extends ParentActivity {
         Intent intent = new Intent(this, NoteAddingActivity.class);
         startActivity(intent);
     }
+
 }

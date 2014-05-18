@@ -61,6 +61,7 @@ public class NoteShowingActivity extends Activity {
         ft.commit();
         EditText etTitle = (EditText) noteEditFragment.getView().findViewById(R.id.etTitle);
         EditText etContent = (EditText) noteEditFragment.getView().findViewById(R.id.etContent);
+
         int _id = intent.getIntExtra("_id",0);
         String title = etTitle.getText().toString();
         String content = etContent.getText().toString();
