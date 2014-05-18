@@ -36,7 +36,8 @@ public class NoteStoreContentProvider extends ContentProvider {
     public static final String NOTE_NEW = "newNote";
     public static final String NOTE_UPDATE = "updateNote";
     public static final String NOTE_DELETE = "deleteNote";
-
+    public static final String NOTE_CREATED_DATE = "createdDate";
+    public static final String NOTE_NOTEBOOK_GUID = "notebookGuid";
     // Скрипт создания таблицы
 //    static final String DB_CREATE_NOTEBOOK = "create table " + NOTEBOOK_TABLE + "("
 //            + NOTE_ID + " integer primary key autoincrement, "
@@ -52,7 +53,9 @@ public class NoteStoreContentProvider extends ContentProvider {
             + NOTE_CONTENT + " text, "
             + NOTE_NEW + " boolean, "
             + NOTE_UPDATE + " boolean, "
-            + NOTE_DELETE + " boolean "
+            + NOTE_DELETE + " boolean, "
+            + NOTE_CREATED_DATE + " long, "
+            + NOTE_NOTEBOOK_GUID + " text "
             + ");";
 
     // // Uri

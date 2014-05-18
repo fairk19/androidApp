@@ -128,17 +128,14 @@ public class ServiceSynchronization extends Service {
                                     mEvernoteSession.getClientFactory().createNoteStoreClient().getNoteContent(note.getGuid(),new OnClientCallback<String>() {
                                         @Override
                                         public void onSuccess(String content) {
-                                            Long createdTime = note.getCreated();
-                                            Long updatedTime = note.getUpdated();
-                                            Date date = new Date(note.getCreated());
-                                            String crTime = date.toString();
-                                            String notebookGuid = note.getNotebookGuid();
                                             content =  content.replaceAll("<.*?>", "");
                                             Log.d(LOG_TAG, content);
                                             ContentValues cv = new ContentValues();
                                             cv.put(NoteStoreContentProvider.NOTE_GUID, note.getGuid());
                                             cv.put(NoteStoreContentProvider.NOTE_TITLE, note.getTitle());
                                             cv.put(NoteStoreContentProvider.NOTE_CONTENT, content );
+                                            cv.put(NoteStoreContentProvider.NOTE_CREATED_DATE, note.getCreated());
+                                            cv.put(NoteStoreContentProvider.NOTE_NOTEBOOK_GUID, note.getNotebookGuid());
                                             getContentResolver().insert(NoteStoreContentProvider.NOTE_CONTENT_URI, cv);
                                         }
 

@@ -37,7 +37,7 @@ public class NoteAddingActivity extends ParentActivity{
 
         mEditTextTitle = (EditText) findViewById(R.id.etTitle);
         mEditTextContent = (EditText) findViewById(R.id.etBody);
-        mBtnSelect = (Button) findViewById(R.id.btnSelectNotebook);
+//        mBtnSelect = (Button) findViewById(R.id.btnSelectNotebook);
         mBtnSave = (Button) findViewById(R.id.btnSend);
 
         Cursor cursor = getContentResolver().query(NOTE_URI, null, null,
@@ -46,7 +46,7 @@ public class NoteAddingActivity extends ParentActivity{
         int[] to = new int[]{ R.id.title, R.id.content };
         scAdapter = new SimpleCursorAdapter(this,
                 R.layout.item_note_list, cursor, from, to);
-        lvAllNotes = (ListView) findViewById(R.id.lvAllNotes);
+//        lvAllNotes = (ListView) findViewById(R.id.lvAllNotes);
         lvAllNotes.setAdapter(scAdapter);
 
 
