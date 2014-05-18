@@ -25,11 +25,6 @@ public class MainActivity extends ParentActivity {
 
     private static final String LOG_TAG = "MainActivity";
 
-
-    private Button mLoginButton;
-    private Button mLogoutButton;
-    private Button mCreateNoteButton;
-
     private GridView gridView;
     private SimpleCursorAdapter scAdapter;
 
