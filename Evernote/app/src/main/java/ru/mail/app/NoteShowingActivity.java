@@ -49,7 +49,7 @@ public class NoteShowingActivity extends Activity {
         ft.replace(R.id.fragment, noteEditFragment);
         ft.addToBackStack(null);
         ft.commit();
-        Log.d(LOGTAG, "btnEdit was clicked");
+        Log.d(LOGTAG, "btnEdit was clickedd");
     }
     public void btnSaveChangesClick(View v) {
         FragmentManager fm = getFragmentManager();
@@ -70,6 +70,7 @@ public class NoteShowingActivity extends Activity {
         cv.put(NoteStoreContentProvider.NOTE_GUID, _id);
         cv.put(NoteStoreContentProvider.NOTE_TITLE, title);
         cv.put(NoteStoreContentProvider.NOTE_CONTENT, content);
+        cv.put(NoteStoreContentProvider.NOTE_UPDATE, 1);
         Uri uri = Uri.parse(NoteStoreContentProvider.NOTE_CONTENT_URI+"/" +_id);
         getContentResolver().update(uri, cv, null, null);
     }

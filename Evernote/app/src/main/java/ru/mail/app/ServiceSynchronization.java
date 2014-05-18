@@ -89,10 +89,10 @@ public class ServiceSynchronization extends Service {
     void synchronization() {
         try {
 
-            //добавляем все новые заметки на сервер
-            addNewNodesToServer();
             //получаем список заметок с сервера
             listNotes();
+            //добавляем все новые заметки на сервер
+            addNewNodesToServer();
 
         } catch (Exception e) {
             Log.v(LOG_TAG, e.toString());
@@ -129,9 +129,11 @@ public class ServiceSynchronization extends Service {
                                     mEvernoteSession.getClientFactory().createNoteStoreClient().getNoteContent(note.getGuid(),new OnClientCallback<String>() {
                                         @Override
                                         public void onSuccess(String content) {
-                                            String content_from_note = note.getContent();
-                                            Log.d(LOG_TAG, content);
+                                            Long createdTime = note.getCreated();
+                                            Long updatedTime = note.getUpdated();
+                                            String notebookGuid = note.getNotebookGuid();
                                             content =  content.replaceAll("<.*?>", "");
+                                            Log.d(LOG_TAG, content);
                                             ContentValues cv = new ContentValues();
                                             cv.put(NoteStoreContentProvider.NOTE_GUID, note.getGuid());
                                             cv.put(NoteStoreContentProvider.NOTE_TITLE, note.getTitle());
