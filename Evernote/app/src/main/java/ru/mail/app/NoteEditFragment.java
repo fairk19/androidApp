@@ -38,6 +38,7 @@ public class NoteEditFragment extends Fragment {
         //_id редактируемой записи
         int _id = intent.getIntExtra(NoteStoreContentProvider.NOTE_ID, 0);
         Uri uri = Uri.parse(NoteStoreContentProvider.NOTE_CONTENT_URI+"/"+ _id);
+
         //для отображения редактируемого текста идем в базу и по _id получаем данные
         cursor = contentResolver.query(uri, null, null, null, null);
         cursor.moveToFirst();
@@ -53,7 +54,6 @@ public class NoteEditFragment extends Fragment {
         etContent.setText(content);
 
         return v;
-
 
     }
 
