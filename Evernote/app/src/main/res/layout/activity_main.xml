@@ -147,7 +147,8 @@
         android:verticalSpacing="10dp"
         android:horizontalSpacing="10dp"
         android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        />
 
 
 </RelativeLayout>

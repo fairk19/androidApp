@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,8 +34,6 @@ public class MainActivity extends ParentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ActionBar actionBar = getActionBar();
-
 
         final Cursor cursor = getContentResolver().query(NoteStoreContentProvider.NOTE_CONTENT_URI, null, null,
                 null, null);
@@ -48,6 +47,7 @@ public class MainActivity extends ParentActivity {
         gridView = (GridView) findViewById(R.id.gridView);
         gridView.setAdapter(scAdapter);
         gridView.setOnItemClickListener(new ItemClickListener(this, cursor));
+        
 
     }
 
@@ -93,10 +93,14 @@ public class MainActivity extends ParentActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        //mEvernoteSession.isLoggedIn() -- надо запомнить этот метод
-//        menu.getItem(R.id.action_login).setVisible(!mEvernoteSession.isLoggedIn());
-//        menu.getItem(R.id.action_logout).setVisible(mEvernoteSession.isLoggedIn());
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.action_logout).setVisible(mEvernoteSession.isLoggedIn());
+        menu.findItem(R.id.action_login).setVisible(!mEvernoteSession.isLoggedIn());
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
