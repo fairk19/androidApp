@@ -171,6 +171,8 @@ public class NoteStoreContentProvider extends ContentProvider {
             } else {
                 selection = selection + " and " + NOTE_ID + " = " + id;
             }
+
+            // уведомляем ContentResolver, что данные по адресу uri изменились
             db.update(NOTE_TABLE, values, selection, selectionArgs);
             getContext().getContentResolver().notifyChange(uri, null);
         }

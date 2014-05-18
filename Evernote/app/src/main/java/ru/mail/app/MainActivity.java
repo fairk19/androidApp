@@ -1,7 +1,5 @@
 package ru.mail.app;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,15 +9,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.evernote.client.android.InvalidAuthenticationException;
 
 public class MainActivity extends ParentActivity {
 
@@ -42,7 +34,6 @@ public class MainActivity extends ParentActivity {
         scAdapter = new SimpleCursorAdapter(this,
                 R.layout.item_note_list, cursor, from, to);
 
-
         gridView = (GridView) findViewById(R.id.gridView);
         gridView.setAdapter(scAdapter);
         gridView.setOnItemClickListener(new ItemClickListener(this, cursor));
@@ -54,7 +45,9 @@ public class MainActivity extends ParentActivity {
     public void onResume() {
         super.onResume();
         updateAuthUi();
-        startService(new Intent(this, ServiceSynchronization.class));
+        if (mEvernoteSession.isLoggedIn()) {
+            startService(new Intent(this, ServiceSynchronization.class));
+        }
     }
 
     private void updateAuthUi() {
@@ -113,7 +106,9 @@ public class MainActivity extends ParentActivity {
             case R.id.action_settings:
                 return true;
             case R.id.action_logout:
-                logout(null);
+                if (mEvernoteSession.isLoggedIn()){
+                    logout(null);
+                }
                 return true;
             case R.id.action_login:
                 login(null);

@@ -64,7 +64,6 @@ public class ServiceSynchronization extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
-        Log.d(LOG_TAG, "onBind");
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
@@ -72,7 +71,6 @@ public class ServiceSynchronization extends Service {
     public void onCreate() {
         super.onCreate();
         mEvernoteSession = ParentActivity.getEvernoteSession();
-        Log.d(LOG_TAG, "onCreate");
     }
 
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -83,16 +81,16 @@ public class ServiceSynchronization extends Service {
 
     public void onDestroy() {
         super.onDestroy();
-        Log.d(LOG_TAG, "onDestroy");
     }
 
     void synchronization() {
+
         try {
 
-            //получаем список заметок с сервера
-            listNotes();
             //добавляем все новые заметки на сервер
             addNewNodesToServer();
+            //получаем список заметок с сервера
+            listNotes();
 
         } catch (Exception e) {
             Log.v(LOG_TAG, e.toString());
@@ -188,13 +186,16 @@ public class ServiceSynchronization extends Service {
 
         while (cursor.moveToNext()) {
 
-            if (cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_NEW)).equals("1")) {
 
-                Log.e(LOG_TAG, "BEFORE IF NOTE NEW " + cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_NEW)));
-                Log.e(LOG_TAG, "BEFORE IF NOTE TITLE " + cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_TITLE)));
+            String noteNew = cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_NEW));
+            String noteUpdate = cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_UPDATE));
+            String noteDelete = cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_DELETE));
+
+            if ( noteNew != null || noteUpdate != null || noteDelete != null) {
 
                 String title = cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_TITLE));
                 String content = cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_CONTENT));
+                String guid = cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_GUID));
                 final Long noteID = Long.parseLong(cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_ID)));
 
                 final Note note = new Note();
@@ -207,31 +208,96 @@ public class ServiceSynchronization extends Service {
                     note.setNotebookGuid(mSelectedNotebookGuid);
                 }
 
-                try {
+                if (noteNew != null) {
+                    try {
 
-                    mEvernoteSession.getClientFactory().createNoteStoreClient().createNote(note, new OnClientCallback<Note>() {
-                        @Override
-                        public void onSuccess(Note data) {
+                        mEvernoteSession.getClientFactory().createNoteStoreClient().createNote(note, new OnClientCallback<Note>() {
+                            @Override
+                            public void onSuccess(Note data) {
 
-                            // удаляем флаг new с заметки
-                            Uri uri = ContentUris.withAppendedId(NoteStoreContentProvider.NOTE_CONTENT_URI, noteID);
-                            getContentResolver().delete(uri, cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_ID)), null);
+                                // удаляем заметку с флагом new из базы
+                                Uri uri = ContentUris.withAppendedId(NoteStoreContentProvider.NOTE_CONTENT_URI, noteID);
+                                getContentResolver().delete(uri, noteID.toString(), null);
 
-                            // сообщение пользователю о успешном сохранение заметки на сервер
-                            Toast.makeText(getApplicationContext(), R.string.success_sync_with_server, Toast.LENGTH_LONG).show();
-                        }
+                                // сообщение пользователю о успешном сохранение заметки на сервер
+                                Toast.makeText(getApplicationContext(), R.string.success_sync_with_server, Toast.LENGTH_LONG).show();
+                            }
 
-                        @Override
-                        public void onException(Exception exception) {
-                            Log.e(LOG_TAG, "Error saving note to server", exception);
-                            Toast.makeText(getApplicationContext(), R.string.error_sync_with_server, Toast.LENGTH_LONG).show();
+                            @Override
+                            public void onException(Exception exception) {
+                                Log.e(LOG_TAG, "Error saving note to server", exception);
+                                Toast.makeText(getApplicationContext(), R.string.error_sync_with_server, Toast.LENGTH_LONG).show();
 
-                        }
-                    });
-                } catch (TTransportException exception) {
-                    Log.e(LOG_TAG, "Error creating notestore on server", exception);
-                    Toast.makeText(getApplicationContext(), R.string.error_sync_with_server, Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    } catch (TTransportException exception) {
+                        Log.e(LOG_TAG, "Error creating notestore on server", exception);
+                        Toast.makeText(getApplicationContext(), R.string.error_sync_with_server, Toast.LENGTH_LONG).show();
 
+                    }
+                }
+
+                if (noteUpdate != null) {
+                    try {
+
+                        note.setGuid(guid);
+                        mEvernoteSession.getClientFactory().createNoteStoreClient().createNote(note, new OnClientCallback<Note>() {
+                            @Override
+                            public void onSuccess(Note data) {
+
+                                // удаляем флаг update с заметки
+                                Uri uri = ContentUris.withAppendedId(NoteStoreContentProvider.NOTE_CONTENT_URI, noteID);
+
+                                ContentValues cv = new ContentValues();
+                                cv.put(NoteStoreContentProvider.NOTE_UPDATE, false);
+                                getContentResolver().update(uri, cv, null, null);
+
+                                // сообщение пользователю о успешном изменении заметки на сервере
+                                Toast.makeText(getApplicationContext(), R.string.success_sync_with_server, Toast.LENGTH_LONG).show();
+                            }
+
+                            @Override
+                            public void onException(Exception exception) {
+                                Log.e(LOG_TAG, "Error saving note to server", exception);
+                                Toast.makeText(getApplicationContext(), R.string.error_sync_with_server, Toast.LENGTH_LONG).show();
+
+                            }
+                        });
+                    } catch (TTransportException exception) {
+                        Log.e(LOG_TAG, "Error creating notestore on server", exception);
+                        Toast.makeText(getApplicationContext(), R.string.error_sync_with_server, Toast.LENGTH_LONG).show();
+
+                    }
+                }
+
+                if (noteDelete != null) {
+                    try {
+
+                        note.setGuid(guid);
+                        mEvernoteSession.getClientFactory().createNoteStoreClient().deleteNote(guid, new OnClientCallback<Integer>() {
+                            @Override
+                            public void onSuccess(Integer data) {
+
+                                // удаляем заметку с флагом delete
+                                Uri uri = ContentUris.withAppendedId(NoteStoreContentProvider.NOTE_CONTENT_URI, noteID);
+                                getContentResolver().delete(uri, noteID.toString(), null);
+
+                                // сообщение пользователю о успешном удалении заметки с сервера
+                                Toast.makeText(getApplicationContext(), R.string.success_sync_with_server, Toast.LENGTH_LONG).show();
+                            }
+
+                            @Override
+                            public void onException(Exception exception) {
+                                Log.e(LOG_TAG, "Error saving note to server", exception);
+                                Toast.makeText(getApplicationContext(), R.string.error_sync_with_server, Toast.LENGTH_LONG).show();
+
+                            }
+                        });
+                    } catch (TTransportException exception) {
+                        Log.e(LOG_TAG, "Error creating notestore on server", exception);
+                        Toast.makeText(getApplicationContext(), R.string.error_sync_with_server, Toast.LENGTH_LONG).show();
+
+                    }
                 }
             }
         }

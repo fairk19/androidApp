@@ -16,12 +16,13 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by vanik on 27.04.14.
  */
 public class NoteShowingActivity extends Activity {
-    private static final String LOGTAG = "NoteShowingActivity";
+    private static final String LOG_TAG = "NoteShowingActivity";
     private Intent intent;
     private NoteShowingFragment noteShowingFragment;
     private NoteEditFragment noteEditFragment;
@@ -40,7 +41,6 @@ public class NoteShowingActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(LOGTAG,"onResume");
     }
 
     public void btnEditClick(View v) {
@@ -49,28 +49,49 @@ public class NoteShowingActivity extends Activity {
         ft.replace(R.id.fragment, noteEditFragment);
         ft.addToBackStack(null);
         ft.commit();
-        Log.d(LOGTAG, "btnEdit was clickedd");
+
+        //выходим наглавное окно
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+
+        //сообщаем пользователю об успешном изменении заметки
+        Toast.makeText(getApplicationContext(), R.string.success_editing_note, Toast.LENGTH_LONG).show();
     }
+
+    public void btnDeleteClick(View v) {
+
+        int _id = intent.getIntExtra("_id", 0);
+        ContentValues cv = new ContentValues();
+        cv.put(NoteStoreContentProvider.NOTE_DELETE, true);
+        Uri uri = Uri.parse(NoteStoreContentProvider.NOTE_CONTENT_URI+"/" +_id);
+        getContentResolver().update(uri, cv, null, null);
+
+        //выходим наглавное окно
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+
+        //сообщаем пользователю об успешном далении заметки
+        Toast.makeText(getApplicationContext(), R.string.success_deleting_note, Toast.LENGTH_LONG).show();
+    }
+
     public void btnSaveChangesClick(View v) {
         FragmentManager fm = getFragmentManager();
         fm.popBackStack();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-//        ft.remove(noteEditFragment);
 
         ft.replace(R.id.fragment, noteShowingFragment);
-//        ft.addToBackStack(null);
         ft.commit();
         EditText etTitle = (EditText) noteEditFragment.getView().findViewById(R.id.etTitle);
         EditText etContent = (EditText) noteEditFragment.getView().findViewById(R.id.etContent);
 
-        int _id = intent.getIntExtra("_id",0);
+        int _id = intent.getIntExtra("_id", 0);
         String title = etTitle.getText().toString();
         String content = etContent.getText().toString();
         ContentValues cv = new ContentValues();
         cv.put(NoteStoreContentProvider.NOTE_GUID, _id);
         cv.put(NoteStoreContentProvider.NOTE_TITLE, title);
         cv.put(NoteStoreContentProvider.NOTE_CONTENT, content);
-        cv.put(NoteStoreContentProvider.NOTE_UPDATE, 1);
+        cv.put(NoteStoreContentProvider.NOTE_UPDATE, true);
         Uri uri = Uri.parse(NoteStoreContentProvider.NOTE_CONTENT_URI+"/" +_id);
         getContentResolver().update(uri, cv, null, null);
     }

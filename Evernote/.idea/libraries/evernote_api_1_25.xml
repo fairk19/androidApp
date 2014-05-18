@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="evernote-api-1.25">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/app/build/exploded-aar/Evernote/library/unspecified/libs/evernote-api-1.25.jar!/" />
+      <root url="jar://$PROJECT_DIR$/library/libs/evernote-api-1.25.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

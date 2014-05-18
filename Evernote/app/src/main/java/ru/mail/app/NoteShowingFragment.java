@@ -21,7 +21,7 @@ import java.net.URI;
  * Created by vanik on 27.04.14.
  */
 public class NoteShowingFragment extends Fragment {
-    private static final String LOGTAG = "NoteShowingFragment";
+    private static final String LOG_TAG = "NoteShowingFragment";
     private TextView tvTitle;
     private TextView tvContent;
     private String title;
@@ -38,7 +38,6 @@ public class NoteShowingFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(LOGTAG, "onResume");
     }
 
     @Override
@@ -48,16 +47,15 @@ public class NoteShowingFragment extends Fragment {
         imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(LOGTAG,"onCreateView");
+
         View v = inflater.inflate(R.layout.note_showing_fragment, null);
 
 
         tvTitle = (TextView) v.findViewById(R.id.tvTitle);
         tvContent = (TextView) v.findViewById(R.id.tvContent);
+
         //_id отображаемой записи
         int _id = intent.getIntExtra(NoteStoreContentProvider.NOTE_ID, 0);
         Uri uri = Uri.parse(NoteStoreContentProvider.NOTE_CONTENT_URI+"/"+ _id);

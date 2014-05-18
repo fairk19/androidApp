@@ -54,20 +54,4 @@
             android:drawableStart="@drawable/ic_menu_save_note"/>
     </LinearLayout>
 
-    <Button
-        style="@style/buttonClass"
-        android:id="@+id/btnSelectNotebook"
-        android:text="@string/btn_select_notebook"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="45dp" />
-
-    <ListView
-        android:id="@+id/lvAllNotes"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true">
-    </ListView>
-
 </RelativeLayout>
