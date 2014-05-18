@@ -25,13 +25,13 @@ public class ItemClickListener implements AdapterView.OnItemClickListener {
         Log.d(LOGTAG, "position of clicked item = " + position);
         cursor.moveToPosition(position);
         int _idIndex = cursor.getColumnIndex("_id");
-        int titleIndex = cursor.getColumnIndex("title");
-        int contentIndex = cursor.getColumnIndex("content");
-        String _id = cursor.getString(_idIndex);
+//        int titleIndex = cursor.getColumnIndex("title");
+//        int contentIndex = cursor.getColumnIndex("content");
+        int _id = cursor.getInt(_idIndex);
         Intent intent = new Intent(context, NoteShowingActivity.class);
         intent.putExtra("_id", _id);
-        intent.putExtra("title", cursor.getString(titleIndex));
-        intent.putExtra("content", cursor.getString(contentIndex));
+//        intent.putExtra("title", cursor.getString(titleIndex));
+//        intent.putExtra("content", cursor.getString(contentIndex));
         context.startActivity(intent);
     }
 }

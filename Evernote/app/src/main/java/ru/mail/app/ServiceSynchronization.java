@@ -129,6 +129,7 @@ public class ServiceSynchronization extends Service {
                                     mEvernoteSession.getClientFactory().createNoteStoreClient().getNoteContent(note.getGuid(),new OnClientCallback<String>() {
                                         @Override
                                         public void onSuccess(String content) {
+                                            String content_from_note = note.getContent();
                                             Log.d(LOG_TAG, content);
                                             content =  content.replaceAll("<.*?>", "");
                                             ContentValues cv = new ContentValues();

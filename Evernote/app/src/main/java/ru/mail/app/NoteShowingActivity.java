@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,34 +30,48 @@ public class NoteShowingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.note_showing_activity);
         intent = getIntent();
-        noteShowingFragment = new NoteShowingFragment(intent);
+        noteShowingFragment = new NoteShowingFragment(intent, getContentResolver());
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.add(R.id.fragment, noteShowingFragment);
         ft.commit();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(LOGTAG,"onResume");
+    }
+
     public void btnEditClick(View v) {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.remove(noteShowingFragment);
-        noteEditFragment = new NoteEditFragment(intent);
-        ft.add(R.id.fragment, noteEditFragment);
+        noteEditFragment = new NoteEditFragment(intent, getContentResolver());
+        ft.replace(R.id.fragment, noteEditFragment);
         ft.addToBackStack(null);
         ft.commit();
         Log.d(LOGTAG, "btnEdit was clicked");
     }
     public void btnSaveChangesClick(View v) {
+        FragmentManager fm = getFragmentManager();
+        fm.popBackStack();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.remove(noteEditFragment);
+//        ft.remove(noteEditFragment);
+
+        ft.replace(R.id.fragment, noteShowingFragment);
+//        ft.addToBackStack(null);
         ft.commit();
         EditText etTitle = (EditText) noteEditFragment.getView().findViewById(R.id.etTitle);
         EditText etContent = (EditText) noteEditFragment.getView().findViewById(R.id.etContent);
-        String _id = intent.getStringExtra("_id");
+
+        int _id = intent.getIntExtra("_id",0);
         String title = etTitle.getText().toString();
         String content = etContent.getText().toString();
         ContentValues cv = new ContentValues();
-        cv.put(NoteStoreContentProvider.NOTE_ID, _id);
+        cv.put(NoteStoreContentProvider.NOTE_GUID, _id);
         cv.put(NoteStoreContentProvider.NOTE_TITLE, title);
         cv.put(NoteStoreContentProvider.NOTE_CONTENT, content);
-        Uri uri = Uri.parse(NoteStoreContentProvider.NOTE_CONTENT_URI + "/" + _id);
+        Uri uri = Uri.parse(NoteStoreContentProvider.NOTE_CONTENT_URI+"/" +_id);
         getContentResolver().update(uri, cv, null, null);
     }
+
+
 }
