@@ -19,10 +19,6 @@ public class NoteAddingActivity extends ParentActivity{
 
     private EditText mEditTextTitle;
     private EditText mEditTextContent;
-    private Button mBtnSave;
-    private Button mBtnSelect;
-    private SimpleCursorAdapter scAdapter;
-    private ListView lvAllNotes;
     final Uri NOTE_URI = Uri
             .parse("content://ru.mail.app.provider/notes");
     private String mSelectedNotebookGuid;
@@ -37,17 +33,11 @@ public class NoteAddingActivity extends ParentActivity{
 
         mEditTextTitle = (EditText) findViewById(R.id.etTitle);
         mEditTextContent = (EditText) findViewById(R.id.etBody);
-        mBtnSelect = (Button) findViewById(R.id.btnSelectNotebook);
-        mBtnSave = (Button) findViewById(R.id.btnSend);
 
         Cursor cursor = getContentResolver().query(NOTE_URI, null, null,
                 null, null);
         String[] from = new String[] {NOTE_GUID, NOTE_TITLE, NOTE_CONTENT };
         int[] to = new int[]{ R.id.title, R.id.content };
-        scAdapter = new SimpleCursorAdapter(this,
-                R.layout.item_note_list, cursor, from, to);
-        lvAllNotes = (ListView) findViewById(R.id.lvAllNotes);
-        lvAllNotes.setAdapter(scAdapter);
 
 
     }
