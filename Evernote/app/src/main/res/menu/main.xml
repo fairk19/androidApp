@@ -17,4 +17,10 @@
         android:orderInCategory="100"
         android:showAsAction="never" />
 
+    <item android:id="@+id/action_search"
+        android:title="@string/action_search"
+        android:orderInCategory="10"
+        android:showAsAction="always"
+        android:icon="@drawable/ic_menu_search"/>
+
 </menu>
