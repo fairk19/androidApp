@@ -25,6 +25,7 @@ import com.evernote.edam.type.Notebook;
 import com.evernote.edam.type.Note;
 import com.evernote.thrift.transport.TTransportException;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +33,8 @@ import java.util.List;
 public class ServiceSynchronization extends Service {
 
     final String LOG_TAG = "ServiceSynchronous";
+    private static SimpleDateFormat hoursFormat = new SimpleDateFormat("HH:mm:ss");
+    private static SimpleDateFormat dayFormat = new SimpleDateFormat("dd-MM-yyyy");
     private static EvernoteSession mEvernoteSession;
     private String mSelectedNotebookGuid;
     private Cursor cursor;
@@ -130,11 +133,14 @@ public class ServiceSynchronization extends Service {
                                         public void onSuccess(String content) {
                                             content =  content.replaceAll("<.*?>", "");
                                             Log.d(LOG_TAG, content);
+                                            Long createdDateAsLong = note.getCreated();
                                             ContentValues cv = new ContentValues();
                                             cv.put(NoteStoreContentProvider.NOTE_GUID, note.getGuid());
                                             cv.put(NoteStoreContentProvider.NOTE_TITLE, note.getTitle());
                                             cv.put(NoteStoreContentProvider.NOTE_CONTENT, content );
-                                            cv.put(NoteStoreContentProvider.NOTE_CREATED_DATE, note.getCreated());
+                                            cv.put(NoteStoreContentProvider.NOTE_CREATED_DATE, createdDateAsLong);
+                                            cv.put(NoteStoreContentProvider.NOTE_CREATED_HH_MM_SS, hoursFormat.format(createdDateAsLong));
+                                            cv.put(NoteStoreContentProvider.NOTE_CREATED_DD_MM_YYYY, dayFormat.format(createdDateAsLong));
                                             cv.put(NoteStoreContentProvider.NOTE_NOTEBOOK_GUID, note.getNotebookGuid());
                                             getContentResolver().insert(NoteStoreContentProvider.NOTE_CONTENT_URI, cv);
                                         }

@@ -29,8 +29,9 @@ public class MainActivity extends ParentActivity {
         final Cursor cursor = getContentResolver().query(NoteStoreContentProvider.NOTE_CONTENT_URI, null, null,
                 null, null);
 
-        String[] from = new String[]{ NoteStoreContentProvider.NOTE_GUID, NoteStoreContentProvider.NOTE_TITLE, NoteStoreContentProvider.NOTE_CONTENT };
-        int[] to = new int[]{ R.id.guid, R.id.title, R.id.content };
+        String[] from = new String[]{ NoteStoreContentProvider.NOTE_GUID, NoteStoreContentProvider.NOTE_TITLE,
+                NoteStoreContentProvider.NOTE_CONTENT, NoteStoreContentProvider.NOTE_CREATED_HH_MM_SS };
+        int[] to = new int[]{ R.id.guid, R.id.title, R.id.content, R.id.time };
         scAdapter = new SimpleCursorAdapter(this,
                 R.layout.item_note_list, cursor, from, to);
 
