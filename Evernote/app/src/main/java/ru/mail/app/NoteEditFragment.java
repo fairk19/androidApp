@@ -2,6 +2,7 @@ package ru.mail.app;
 
 import android.app.Fragment;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 /**
@@ -52,6 +54,15 @@ public class NoteEditFragment extends Fragment {
 
         return v;
 
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        //после редактирования скрываем клавиатуру
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
 
     }
 }
