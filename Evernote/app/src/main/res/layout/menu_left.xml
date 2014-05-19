@@ -3,12 +3,117 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffaaaa"
-    >
+    android:background="#182025">
 
-    <TextView
+<RelativeLayout
+    style="@style/leftMenuItemStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        style="@style/leftMenuIcoStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ололо, ололо"/>
+        android:src="@drawable/ic_drawer_notes"
+        android:id="@+id/notes_ico"
+        />
+
+    <TextView
+        style="@style/leftMenuTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewNotes"
+        android:text="@string/left_menu_notes"
+        android:layout_toRightOf="@+id/notes_ico"
+        />
+</RelativeLayout>
+
+<RelativeLayout
+    style="@style/leftMenuItemStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        style="@style/leftMenuIcoStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_drawer_notebooks"
+        android:id="@+id/notebooks_ico"
+        />
+
+    <TextView
+        style="@style/leftMenuTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/left_menu_notebooks"
+        android:layout_toRightOf="@+id/notebooks_ico"
+        />
+</RelativeLayout>
+
+<RelativeLayout
+    style="@style/leftMenuItemStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        style="@style/leftMenuIcoStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_drawer_tags"
+        android:id="@+id/tags_ico"
+        />
+
+    <TextView
+        style="@style/leftMenuTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/left_menu_tags"
+        android:layout_toRightOf="@+id/tags_ico"
+        />
+</RelativeLayout>
+
+<RelativeLayout
+    style="@style/leftMenuItemStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        style="@style/leftMenuIcoStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_drawer_shortcuts"
+        android:id="@+id/links_ico"
+        />
+
+    <TextView
+        style="@style/leftMenuTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/left_menu_links"
+        android:layout_toRightOf="@+id/links_ico"
+        />
+</RelativeLayout>
+
+<RelativeLayout
+    style="@style/leftMenuItemStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        style="@style/leftMenuIcoStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_drawer_white_notebooks"
+        android:id="@+id/links_white_notebooks"
+        />
+
+    <TextView
+        style="@style/leftMenuTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/left_menu_white_notebooks"
+        android:layout_toRightOf="@+id/links_white_notebooks"
+        />
+</RelativeLayout>
 
 </LinearLayout>

@@ -155,7 +155,7 @@
         android:layout_height="match_parent"
         android:name="ru.mail.app.LeftMenu"
         tools:layout="@layout/menu_left"
-        android:id="@+id/fs"
+        android:id="@+id/menu_left"
         />
 
 </RelativeLayout>

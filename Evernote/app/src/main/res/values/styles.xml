@@ -44,4 +44,20 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
+    <style name="leftMenuItemStyle">
+        <item name="android:background">@drawable/for_left_menu_item</item>
+    </style>
+
+    <style name="leftMenuTextStyle">
+        <item name="android:textColor">@color/main_green_color</item>
+        <item name="android:textSize">30dp</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="leftMenuIcoStyle">
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_margin">10dp</item>
+    </style>
+    
 </resources>

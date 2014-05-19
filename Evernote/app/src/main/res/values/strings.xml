@@ -35,5 +35,10 @@
     <string name="error_sync_with_server">Не удалось соедениться ссервером</string>
     <string name="success_sync_with_server">Все изменения сохранены на сервер</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="left_menu_notes">Все заметки</string>
+    <string name="left_menu_tags">Тэги</string>
+    <string name="left_menu_notebooks">Блокноты</string>
+    <string name="left_menu_links">Ярлыки</string>
+    <string name="left_menu_white_notebooks">Белые блокноты</string>
 
 </resources>
