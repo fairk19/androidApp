@@ -1,5 +1,7 @@
 package ru.mail.app;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.ContentUris;
 import android.content.Intent;
 import android.database.Cursor;
@@ -13,7 +15,7 @@ import android.widget.GridView;
 import android.widget.SimpleCursorAdapter;
 
 
-public class MainActivity extends ParentActivity {
+public class MainActivity extends ParentActivity implements ItemFragment.OnFragmentInteractionListener {
 
     private static final String LOG_TAG = "MainActivity";
 
@@ -126,4 +128,7 @@ public class MainActivity extends ParentActivity {
         startActivity(intent);
     }
 
+
+    @Override
+    public void onFragmentInteraction(String id) {return;}
 }

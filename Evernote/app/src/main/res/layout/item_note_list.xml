@@ -57,5 +57,4 @@
         android:drawableStart="@drawable/ic_reminders_drawer_list_reminder"
         />
 
-
 </RelativeLayout>

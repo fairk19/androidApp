@@ -57,4 +57,5 @@ public class ParentActivity extends Activity {
     }
 
     public static EvernoteSession getEvernoteSession() { return mEvernoteSession; }
+
 }
