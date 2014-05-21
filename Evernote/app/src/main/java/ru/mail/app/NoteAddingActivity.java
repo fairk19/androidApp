@@ -53,11 +53,11 @@ public class NoteAddingActivity extends ParentActivity{
 
         //добавление записи в локальную базу
         ContentValues cv = new ContentValues();
-        String guid = "0";
         cv.put(NoteStoreContentProvider.NOTE_TITLE,  title);
         cv.put(NoteStoreContentProvider.NOTE_CONTENT, content);
-        cv.put(NoteStoreContentProvider.NOTE_GUID, guid);
         cv.put(NoteStoreContentProvider.NOTE_NEW, true);
+        cv.put(NoteStoreContentProvider.NOTE_UPDATE, false );
+        cv.put(NoteStoreContentProvider.NOTE_DELETE, false );
         getContentResolver().insert(NoteStoreContentProvider.NOTE_CONTENT_URI,cv);
 
         //выходим наглавное окно

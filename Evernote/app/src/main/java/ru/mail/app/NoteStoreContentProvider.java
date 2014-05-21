@@ -134,12 +134,11 @@ public class NoteStoreContentProvider extends ContentProvider {
     }
 
     public Uri insert(Uri uri, ContentValues contentValues) {
-        Log.d(LOG_TAG, "insert");
+        Log.d(LOG_TAG, "Insert" + uri.toString());
 
         String tableName = uri.getPath().substring(1, uri.getPath().length());
         db = dbHelper.getWritableDatabase();
         long rowID = db.insert(tableName, null, contentValues);
-        Log.d(LOG_TAG, "ROWID" + rowID);
         Uri resultUri = ContentUris.withAppendedId(uri, rowID);
 
         // уведомляем ContentResolver, что данные по адресу resultUri изменились
@@ -149,7 +148,7 @@ public class NoteStoreContentProvider extends ContentProvider {
 
     public int delete(Uri uri, String selection, String[] selectionArgs) {
 
-        Log.d(LOG_TAG, "delete, " + uri.toString());
+        Log.d(LOG_TAG, "Delete, " + uri.toString());
         String id = uri.getLastPathSegment();
 
         if (TextUtils.isEmpty(selection)) {
@@ -169,21 +168,19 @@ public class NoteStoreContentProvider extends ContentProvider {
     public int update(Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
 
-        if(uriMatcher.match(uri) == URI_NOTES_ID) {
-
-            db = dbHelper.getWritableDatabase();
+            Log.d(LOG_TAG, "Update, " + uri.toString());
             String id = uri.getLastPathSegment();
-            if (TextUtils.isEmpty(selection)){
-                selection = NOTE_ID + " = \"" + id + "\"";
+
+            if (TextUtils.isEmpty(selection)) {
+                selection = NOTE_ID + " = " + id;
             } else {
-                selection = selection + " and " + NOTE_ID + " = " + id;
+                selection = selection + " AND " + NOTE_ID + " = " + id;
             }
 
-            // уведомляем ContentResolver, что данные по адресу uri изменились
             db.update(NOTE_TABLE, values, selection, selectionArgs);
+            // уведомляем ContentResolver, что данные по адресу uri изменились
             getContext().getContentResolver().notifyChange(uri, null);
-        }
-        return 0;
+            return 0;
     }
 
     public String getType(Uri uri) {

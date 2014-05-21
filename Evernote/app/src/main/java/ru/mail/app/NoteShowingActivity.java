@@ -1,21 +1,14 @@
 package ru.mail.app;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -81,7 +74,7 @@ public class NoteShowingActivity extends Activity {
         String title = etTitle.getText().toString();
         String content = etContent.getText().toString();
         ContentValues cv = new ContentValues();
-        cv.put(NoteStoreContentProvider.NOTE_GUID, _id);
+        cv.put(NoteStoreContentProvider.NOTE_ID, _id);
         cv.put(NoteStoreContentProvider.NOTE_TITLE, title);
         cv.put(NoteStoreContentProvider.NOTE_CONTENT, content);
         cv.put(NoteStoreContentProvider.NOTE_UPDATE, true);
