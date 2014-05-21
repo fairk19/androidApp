@@ -179,11 +179,6 @@ public class ServiceSynchronization extends Service {
             String noteUpdate = cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_UPDATE));
             String noteDelete = cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_DELETE));
 
-            Log.e(LOG_TAG, "TITLE " + cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_TITLE)));
-            Log.e(LOG_TAG, "NEW " + noteNew);
-            Log.e(LOG_TAG, "UPDATE " + noteUpdate);
-            Log.e(LOG_TAG, "DELETE " + noteDelete);
-
             if ( noteNew.equals("1") || noteUpdate.equals("1") || noteDelete.equals("1")) {
 
                     String title = cursor.getString(cursor.getColumnIndex(NoteStoreContentProvider.NOTE_TITLE));
@@ -238,9 +233,6 @@ public class ServiceSynchronization extends Service {
                             mEvernoteSession.getClientFactory().createNoteStoreClient().updateNote(note, new OnClientCallback<Note>() {
                                 @Override
                                 public void onSuccess(Note data) {
-
-                                    Log.e(LOG_TAG, "UPDATE GUID " + note.getGuid());
-                                    Log.e(LOG_TAG, "UPDATE TITLE " + note.getTitle());
 
                                     // удаляем флаг update с заметки
                                     Uri uri = ContentUris.withAppendedId(NoteStoreContentProvider.NOTE_CONTENT_URI, noteID);
