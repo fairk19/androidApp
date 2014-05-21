@@ -9,10 +9,8 @@
     <string name="title_activity_login">Авторизация</string>
     <string name="error_creating_notestore">Ошибка синхронизации</string>
     <string name="success_creating_notestore">Синхронизация прошла успешно</string>
-
     <string name="ok">OK</string>
     <string name="error_listing_notebooks">Error listing notebooks</string>
-
     <string name="btn_save_changes">Сохранить изменения</string>
     <string name="btn_edit_note">Редактировать</string>
     <string name="btn_delete_note">Удалить</string>
@@ -29,14 +27,20 @@
     <string name="success_deleting_note">Заметка удалена</string>
     <string name="create_new_note">Создать новую заметку</string>
     <string name="error_saving_note">Ошибка при создании заметки</string>
-
     <string name="panel_text_add">текст</string>
     <string name="panel_photo_add">камера</string>
     <string name="panel_image_add">фото</string>
     <string name="panel_reminder_add">напомнить</string>
     <string name="panel_list_add">список</string>
 
-    <string name="error_sync_with_server">Не удалось соедениться с сервером</string>
+    <string name="error_sync_with_server">Не удалось соединиться с сервером</string>
+
     <string name="success_sync_with_server">Все изменения сохранены на сервер</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="left_menu_notes">Все заметки</string>
+    <string name="left_menu_tags">Тэги</string>
+    <string name="left_menu_notebooks">Блокноты</string>
+    <string name="left_menu_links">Ярлыки</string>
+    <string name="left_menu_white_notebooks">Белые блокноты</string>
 
 </resources>

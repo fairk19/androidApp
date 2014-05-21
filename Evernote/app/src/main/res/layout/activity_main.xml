@@ -150,6 +150,14 @@
         android:layout_height="wrap_content"
         />
 
+    <fragment
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:name="ru.mail.app.LeftMenu"
+        tools:layout="@layout/menu_left"
+        android:id="@+id/menu_left"
+        android:layout_toLeftOf="@id/buttonPanel"
+        />
 
 </RelativeLayout>
 
