@@ -27,7 +27,7 @@
     <string name="success_saving_note">Заметка добавленна</string>
     <string name="success_editing_note">Заметка изменена</string>
     <string name="success_deleting_note">Заметка удалена</string>
-    <string name="create_new_note">Запилить новую заметку</string>
+    <string name="create_new_note">Создать новую заметку</string>
     <string name="error_saving_note">Ошибка при создании заметки</string>
 
     <string name="panel_text_add">текст</string>
@@ -36,7 +36,7 @@
     <string name="panel_reminder_add">напомнить</string>
     <string name="panel_list_add">список</string>
 
-    <string name="error_sync_with_server">Не удалось соедениться ссервером</string>
+    <string name="error_sync_with_server">Не удалось соедениться с сервером</string>
     <string name="success_sync_with_server">Все изменения сохранены на сервер</string>
 
 </resources>

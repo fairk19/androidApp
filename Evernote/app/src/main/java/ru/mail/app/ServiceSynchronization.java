@@ -9,11 +9,7 @@ import android.net.Uri;
 import android.os.IBinder;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
-
-import com.evernote.client.android.AsyncNoteStoreClient;
-import com.evernote.client.android.ClientFactory;
 import com.evernote.client.android.EvernoteSession;
 import com.evernote.client.android.EvernoteUtil;
 import com.evernote.client.android.OnClientCallback;
@@ -26,8 +22,6 @@ import com.evernote.edam.type.Note;
 import com.evernote.thrift.transport.TTransportException;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ServiceSynchronization extends Service {
@@ -37,7 +31,6 @@ public class ServiceSynchronization extends Service {
     private static SimpleDateFormat dayFormat = new SimpleDateFormat("dd-MM-yyyy");
     private static EvernoteSession mEvernoteSession;
     private String mSelectedNotebookGuid;
-    private Cursor cursor;
 
     public ServiceSynchronization() {
     }
@@ -170,7 +163,7 @@ public class ServiceSynchronization extends Service {
 
     public void addNewNodesToServer(){
 
-        cursor = getContentResolver().query(NoteStoreContentProvider.NOTE_CONTENT_URI, null, null,
+        Cursor cursor = getContentResolver().query(NoteStoreContentProvider.NOTE_CONTENT_URI, null, null,
                 null, null);
 
         while (cursor.moveToNext()) {
@@ -288,38 +281,6 @@ public class ServiceSynchronization extends Service {
                         }
                     }
             }
-        }
-    }
-
-    public void selectNotebook(View view) {
-
-        try {
-            mEvernoteSession.getClientFactory().createNoteStoreClient().listNotebooks(new OnClientCallback<List<Notebook>>() {
-                int mSelectedPos = -1;
-
-                @Override
-                public void onSuccess(final List<Notebook> notebooks) {
-                    CharSequence[] names = new CharSequence[notebooks.size()];
-                    int selected = -1;
-                    Notebook notebook = null;
-                    for (int index = 0; index < notebooks.size(); index++) {
-                        notebook = notebooks.get(index);
-                        names[index] = notebook.getName();
-                        if (notebook.getGuid().equals(mSelectedNotebookGuid)) {
-                            selected = index;
-                        }
-                    }
-                }
-
-                @Override
-                public void onException(Exception exception) {
-                    Log.e(LOG_TAG, "Error listing notebooks", exception);
-                    Toast.makeText(getApplicationContext(), R.string.error_listing_notebooks, Toast.LENGTH_LONG).show();
-                }
-            });
-        } catch (TTransportException exception) {
-            Log.e(LOG_TAG, "Error creating notestore", exception);
-            Toast.makeText(getApplicationContext(), R.string.error_creating_notestore, Toast.LENGTH_LONG).show();
         }
     }
 
