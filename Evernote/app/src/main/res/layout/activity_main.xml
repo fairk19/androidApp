@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ru.mail.app.MyViewGroup xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="#aaaaaa"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -161,5 +161,5 @@
         android:layout_toLeftOf="@id/buttonPanel"
         />
 
-</RelativeLayout>
+</ru.mail.app.MyViewGroup>
 

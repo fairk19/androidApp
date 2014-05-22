@@ -30,8 +30,8 @@ public class MainActivity extends ParentActivity implements View.OnTouchListener
     private SimpleCursorAdapter scAdapter;
 
 
-    public int firstTouchX;
-    public int firstTouchY;
+    public static float firstTouchX;
+    public static float firstTouchY;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,19 +62,18 @@ public class MainActivity extends ParentActivity implements View.OnTouchListener
             }
         }
 
-        if(true) {
-//        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             findViewById(R.id.mainLayout).setOnTouchListener(this);
+            getFragmentManager().findFragmentById(R.id.menu_left).getView()
+                    .setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View view, MotionEvent motionEvent) {
+                            Log.d("opopop","3");
+                            return false;
+                        }
+                    });
         }
 
-        getFragmentManager().findFragmentById(R.id.menu_left).getView()
-                .setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View view, MotionEvent motionEvent) {
-                        Log.d("opopop","3");
-                        return false;
-                    }
-                });
 
     }
 
@@ -169,18 +168,23 @@ public class MainActivity extends ParentActivity implements View.OnTouchListener
 
         View view = getFragmentManager().findFragmentById(R.id.menu_left).getView();
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) view.getLayoutParams();
-        params.addRule(RelativeLayout.ALIGN_PARENT_START);
-        params.removeRule(RelativeLayout.LEFT_OF);
-        view.setLayoutParams(params);
 
-        Log.i("touch", String.valueOf(event.getX())
-                        + " "
-                        + String.valueOf(event.getX())
-                        + " "
-                        + String.valueOf(event.getAction()
-                        + " "
-                        + "")
-        );
+        if(event.getAction() == MotionEvent.ACTION_UP) {
+            MyViewGroup myViewGroup = (MyViewGroup) findViewById(R.id.mainLayout);
+            firstTouchX = myViewGroup.firstTouchX;
+            firstTouchY = myViewGroup.firstTouchY;
+            Log.i("op", String.valueOf(event.getX()) + " " + String.valueOf(firstTouchX) );
+            if( event.getX() - firstTouchX > 150  ) {
+                params.addRule(RelativeLayout.ALIGN_PARENT_START);
+                params.removeRule(RelativeLayout.LEFT_OF);
+            } else if (event.getX() - firstTouchX < -150) {
+                params.removeRule(RelativeLayout.ALIGN_PARENT_START);
+                params.addRule(RelativeLayout.LEFT_OF, R.id.buttonPanel);
+            }
+            view.setLayoutParams(params);
+        }
+
+
         return true;
     }
 
