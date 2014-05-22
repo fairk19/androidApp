@@ -166,9 +166,8 @@ public class MainActivity extends ParentActivity implements View.OnTouchListener
     public boolean onTouchEvent(MotionEvent event) {
 
         View view = getFragmentManager().findFragmentById(R.id.menu_left).getView();
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) view.getLayoutParams();
-
-        if(event.getAction() == MotionEvent.ACTION_UP) {
+        if( view != null && event.getAction() == MotionEvent.ACTION_UP) {
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) view.getLayoutParams();
             MyViewGroup myViewGroup = (MyViewGroup) findViewById(R.id.mainLayout);
             firstTouchX = myViewGroup.firstTouchX;
             firstTouchY = myViewGroup.firstTouchY;
