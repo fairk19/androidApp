@@ -35,6 +35,9 @@ public class NoteShowingFragment extends Fragment {
         this.contentResolver = contentResolver;
     }
 
+    public NoteShowingFragment(){
+    }
+
     @Override
     public void onResume() {
         super.onResume();

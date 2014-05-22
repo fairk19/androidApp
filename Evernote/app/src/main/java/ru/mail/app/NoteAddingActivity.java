@@ -15,6 +15,8 @@ public class NoteAddingActivity extends ParentActivity{
     private EditText mEditTextTitle;
     private EditText mEditTextContent;
 
+    public NoteAddingActivity() {return;}
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.note_adding_activity);

@@ -7,12 +7,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-
 /**
  * Created by vanik on 27.04.14.
  */
@@ -29,6 +29,10 @@ public class NoteEditFragment extends Fragment {
         this.contentResolver = contentResolver;
     }
 
+    private static int id_temp = 0;
+
+    public NoteEditFragment(){super();}
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.note_edit_fragment, null);
@@ -36,7 +40,17 @@ public class NoteEditFragment extends Fragment {
         etContent = (EditText) v.findViewById(R.id.etContent);
 
         //_id редактируемой записи
-        int _id = intent.getIntExtra(NoteStoreContentProvider.NOTE_ID, 0);
+
+
+        int _id;
+        if( intent != null ) {
+            _id = intent.getIntExtra(NoteStoreContentProvider.NOTE_ID, 0);
+            id_temp = intent.getIntExtra(NoteStoreContentProvider.NOTE_ID, 0);
+        } else {
+            _id = id_temp;
+        }
+
+
         Uri uri = Uri.parse(NoteStoreContentProvider.NOTE_CONTENT_URI+"/"+ _id);
 
         //для отображения редактируемого текста идем в базу и по _id получаем данные
@@ -64,5 +78,9 @@ public class NoteEditFragment extends Fragment {
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
 
+    }
+
+    public void cancelEditNote(View view){
+        return;
     }
 }
