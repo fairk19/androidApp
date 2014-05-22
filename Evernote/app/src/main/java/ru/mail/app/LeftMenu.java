@@ -2,7 +2,9 @@ package ru.mail.app;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +12,7 @@ import android.view.ViewGroup;
 /**
  * Created by anton on 19.05.14.
  */
-public class LeftMenu extends Fragment {
+public class LeftMenu extends Fragment implements View.OnClickListener {
 
     @Override
     public void onAttach(Activity activity) {
@@ -19,6 +21,7 @@ public class LeftMenu extends Fragment {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,5 +62,8 @@ public class LeftMenu extends Fragment {
     }
 
 
-
+    @Override
+    public void onClick(View view) {
+        Log.i("Fragment", "click");
+    }
 }

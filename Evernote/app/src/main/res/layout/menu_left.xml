@@ -25,6 +25,7 @@
             android:id="@+id/textViewNotes"
             android:text="@string/left_menu_notes"
             android:layout_toRightOf="@+id/notes_ico"
+            android:onClick="onClick"
             />
     </RelativeLayout>
 

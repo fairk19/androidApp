@@ -35,7 +35,6 @@ public class MyViewGroup extends RelativeLayout{
                 break;
             case MotionEvent.ACTION_MOVE:
                 boolean b = shouldIntecept(ev);
-                Log.i("d", String.valueOf(b));
                 return b;
             default:
                 break;

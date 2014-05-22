@@ -74,7 +74,6 @@ public class MainActivity extends ParentActivity implements View.OnTouchListener
                     });
         }
 
-
     }
 
     @Override
@@ -173,7 +172,6 @@ public class MainActivity extends ParentActivity implements View.OnTouchListener
             MyViewGroup myViewGroup = (MyViewGroup) findViewById(R.id.mainLayout);
             firstTouchX = myViewGroup.firstTouchX;
             firstTouchY = myViewGroup.firstTouchY;
-            Log.i("op", String.valueOf(event.getX()) + " " + String.valueOf(firstTouchX) );
             if( event.getX() - firstTouchX > 150  ) {
                 params.addRule(RelativeLayout.ALIGN_PARENT_START);
                 params.removeRule(RelativeLayout.LEFT_OF);

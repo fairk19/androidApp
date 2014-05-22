@@ -159,6 +159,7 @@
         tools:layout="@layout/menu_left"
         android:id="@+id/menu_left"
         android:layout_toLeftOf="@id/buttonPanel"
+
         />
 
 </ru.mail.app.MyViewGroup>
