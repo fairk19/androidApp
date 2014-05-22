@@ -7,15 +7,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
-
-import java.net.URI;
 
 /**
  * Created by vanik on 27.04.14.
@@ -54,7 +50,6 @@ public class NoteShowingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.note_showing_fragment, null);
-
 
         tvTitle = (TextView) v.findViewById(R.id.tvTitle);
         tvContent = (TextView) v.findViewById(R.id.tvContent);
