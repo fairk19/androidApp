@@ -81,11 +81,14 @@ public class NoteShowingActivity extends Activity {
         Uri uri = Uri.parse(NoteStoreContentProvider.NOTE_CONTENT_URI+"/" +_id);
         getContentResolver().update(uri, cv, null, null);
 
-        //выходим наглавное окно
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        //выходим на главное окно
+        finish();
 
         //сообщаем пользователю об успешном изменении заметки
         Toast.makeText(getApplicationContext(), R.string.success_editing_note, Toast.LENGTH_LONG).show();
+    }
+
+    public void btnCancelSaveChanges(View v){
+
     }
 }

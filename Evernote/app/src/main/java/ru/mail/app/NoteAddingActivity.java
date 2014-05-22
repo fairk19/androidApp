@@ -48,9 +48,8 @@ public class NoteAddingActivity extends ParentActivity{
         cv.put(NoteStoreContentProvider.NOTE_DELETE, false );
         getContentResolver().insert(NoteStoreContentProvider.NOTE_CONTENT_URI, cv);
 
-        //выходим наглавное окно
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        //выходим на главное окно
+        finish();
 
         //сообщаем пользователю об успешном добалении заметки
         Toast.makeText(getApplicationContext(), R.string.success_saving_note, Toast.LENGTH_LONG).show();

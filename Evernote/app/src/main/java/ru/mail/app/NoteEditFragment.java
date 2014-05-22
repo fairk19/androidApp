@@ -39,9 +39,6 @@ public class NoteEditFragment extends Fragment {
         etTitle = (EditText) v.findViewById(R.id.etTitle);
         etContent = (EditText) v.findViewById(R.id.etContent);
 
-        //_id редактируемой записи
-
-
         int _id;
         if( intent != null ) {
             _id = intent.getIntExtra(NoteStoreContentProvider.NOTE_ID, 0);

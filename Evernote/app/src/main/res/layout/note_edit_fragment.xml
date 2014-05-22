@@ -34,6 +34,7 @@
         <Button
             style="@style/buttonClassTop"
             android:text="@string/btn_cancel"
+            android:onClick="btnCancelSaveChanges"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="1"

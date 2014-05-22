@@ -68,7 +68,6 @@ public class MainActivity extends ParentActivity implements View.OnTouchListener
                     .setOnTouchListener(new View.OnTouchListener() {
                         @Override
                         public boolean onTouch(View view, MotionEvent motionEvent) {
-                            Log.d("opopop","3");
                             return false;
                         }
                     });
@@ -181,8 +180,6 @@ public class MainActivity extends ParentActivity implements View.OnTouchListener
             }
             view.setLayoutParams(params);
         }
-
-
         return true;
     }
 
