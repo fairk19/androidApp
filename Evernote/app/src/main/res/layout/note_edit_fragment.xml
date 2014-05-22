@@ -6,16 +6,50 @@
     <EditText
         android:id="@+id/etTitle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:paddingLeft="10dp"
+        android:layout_height="wrap_content"
+        android:background="#00000000"
+        android:textColorHint="#2dbe60"
+        android:hint="@string/note_title"
+        android:textColor="#2dbe60"
+        android:textSize="30dp"
+        android:layout_below="@+id/topPanel"
+        />
     <EditText
         android:layout_below="@id/etTitle"
         android:id="@+id/etContent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <Button
-        style="@style/buttonClass"
-        android:text="@string/btn_save_changes"
-        android:layout_below="@id/etContent"
-        android:onClick="btnSaveChangesClick"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:minLines="6"
+        android:gravity="top" />
+
+    <LinearLayout
+        android:id="@+id/topPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        >
+
+        <Button
+            style="@style/buttonClassTop"
+            android:text="@string/btn_cancel"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ic_menu_cancel"
+            android:textAlignment="textStart"/>
+
+        <Button
+            style="@style/buttonClassTop"
+            android:id="@+id/btnSend"
+            android:text="@string/btn_send"
+            android:onClick="btnSaveChangesClick"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:drawableStart="@drawable/ic_menu_save_note"
+            />
+    </LinearLayout>
 </RelativeLayout>
