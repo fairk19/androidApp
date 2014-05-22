@@ -21,6 +21,8 @@ import android.widget.RelativeLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
+import com.evernote.client.android.InvalidAuthenticationException;
+
 
 public class MainActivity extends ParentActivity implements View.OnTouchListener {
 
@@ -106,12 +108,12 @@ public class MainActivity extends ParentActivity implements View.OnTouchListener
     }
 
     public void logout(View view) {
-//        try {
+        try {
               deleteAllNotesFromDB();
-//              mEvernoteSession.logOut(this);
-//        } catch (InvalidAuthenticationException e) {
-//            Log.e(LOG_TAG, "Tried to call logout with not logged in", e);
-//        }
+              mEvernoteSession.logOut(this);
+        } catch (InvalidAuthenticationException e) {
+            Log.e(LOG_TAG, "Tried to call logout with not logged in", e);
+        }
         updateAuthUi();
     }
 
