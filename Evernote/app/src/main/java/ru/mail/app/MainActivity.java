@@ -1,30 +1,42 @@
 package ru.mail.app;
 
+import android.app.ActionBar;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.ContentUris;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 
-public class MainActivity extends ParentActivity {
+public class MainActivity extends ParentActivity implements View.OnTouchListener {
 
     private static final String LOG_TAG = "MainActivity";
 
     private GridView gridView;
     private SimpleCursorAdapter scAdapter;
 
+
+    public int firstTouchX;
+    public int firstTouchY;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         final Cursor cursor = getContentResolver().query(NoteStoreContentProvider.NOTE_CONTENT_URI, null, null,
                 null, null);
@@ -38,7 +50,31 @@ public class MainActivity extends ParentActivity {
         gridView = (GridView) findViewById(R.id.gridView);
         gridView.setAdapter(scAdapter);
         gridView.setOnItemClickListener(new ItemClickListener(this, cursor));
-        
+        if( !mEvernoteSession.isLoggedIn()) {
+            findViewById(R.id.buttonPanel).setVisibility(View.INVISIBLE);
+            if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                findViewById(R.id.createNewNoteTextView).setVisibility(View.INVISIBLE);
+            }
+        } else {
+            findViewById(R.id.buttonPanel).setVisibility(View.VISIBLE);
+            if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                findViewById(R.id.createNewNoteTextView).setVisibility(View.VISIBLE);
+            }
+        }
+
+        if(true) {
+//        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            findViewById(R.id.mainLayout).setOnTouchListener(this);
+        }
+
+        getFragmentManager().findFragmentById(R.id.menu_left).getView()
+                .setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View view, MotionEvent motionEvent) {
+                        Log.d("opopop","3");
+                        return false;
+                    }
+                });
 
     }
 
@@ -127,4 +163,29 @@ public class MainActivity extends ParentActivity {
         startActivity(intent);
     }
 
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        View view = getFragmentManager().findFragmentById(R.id.menu_left).getView();
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) view.getLayoutParams();
+        params.addRule(RelativeLayout.ALIGN_PARENT_START);
+        params.removeRule(RelativeLayout.LEFT_OF);
+        view.setLayoutParams(params);
+
+        Log.i("touch", String.valueOf(event.getX())
+                        + " "
+                        + String.valueOf(event.getX())
+                        + " "
+                        + String.valueOf(event.getAction()
+                        + " "
+                        + "")
+        );
+        return true;
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        return false;
+    }
 }

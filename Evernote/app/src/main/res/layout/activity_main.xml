@@ -5,7 +5,8 @@
     android:padding="0dp"
     tools:context="ru.mail.app.MainActivity$PlaceholderFragment"
     android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:id="@+id/mainLayout">
 
     <TextView
         android:textSize="20dp"
@@ -149,6 +150,7 @@
         android:layout_alignParentBottom="true"
         android:layout_height="wrap_content"
         />
+
 
     <fragment
         android:layout_width="wrap_content"
